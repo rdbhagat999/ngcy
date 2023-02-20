@@ -97,11 +97,11 @@ export class PostListComponent implements OnInit {
   yourPosts$!: Observable<IPost[]>;
 
   ngOnInit() {
+    this.auth_user = this.authService.getAuthUser();
     this.posts$ = this.postService.getPosts();
     this.yourPosts$ = this.postService.getAllPostsByUserId(
       this.auth_user?.id || 0
     );
-    this.auth_user = this.authService.getAuthUser();
   }
 
   trackById(index: number, item: IPost) {
