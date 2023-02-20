@@ -102,6 +102,9 @@
           "options": {
             "browserTarget": "ngcy:build"
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

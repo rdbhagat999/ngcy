@@ -6,7 +6,8 @@
     "start": "ng serve --hmr",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "npx cypress open"
+    "test": "npx cypress open",
+    "ghdeploy": "ng deploy --base-href=/ngcy/"
   },
   "private": true,
   "dependencies": {
@@ -23,10 +24,13 @@
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1501.6",
     "@angular-devkit/build-angular": "^15.1.4",
+    "@angular-devkit/core": "^15.1.6",
+    "@angular-devkit/schematics": "^15.1.6",
     "@angular/cli": "~15.1.4",
     "@angular/compiler-cli": "^15.1.0",
-    "@types/cypress": "^1.1.3",
+    "angular-cli-ghpages": "^1.0.5",
     "autoprefixer": "^10.4.13",
     "cypress": "^12.6.0",
     "postcss": "^8.4.21",
