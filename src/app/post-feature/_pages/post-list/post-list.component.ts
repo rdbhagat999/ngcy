@@ -6,10 +6,10 @@ import {
 } from "@angular/core";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { PostService } from "@app/_services";
+import { AuthService, PostService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
 import { Observable } from "rxjs";
-import { IPost } from "@app/_shared/_models";
+import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 
 @Component({
@@ -18,34 +18,74 @@ import { ToastrService } from "@app/toastr";
   imports: [NgIf, NgForOf, AsyncPipe, RouterModule, PostCardComponent],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section class="post-list">
-      <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg font-medium leading-6 text-gray-900">Post list</h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">
-            Displays a list of posts from all authors.
-          </p>
-        </div>
+    <section
+      [class.md:grid-cols-2]="{
+        'md:grid-cols-2': auth_user?.role === authorRole
+      }"
+      class="post-list grid grid-cols-1 gap-4">
+      <article>
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              Post list
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              Displays a list of posts from all authors.
+            </p>
+          </div>
 
-        <div class="bg-white px-4 py-5 sm:grid sm:px-6">
-          <ul
-            role="list"
-            class="divide-y divide-gray-200 rounded-md border border-gray-200">
-            <ng-container *ngIf="posts$ | async as posts">
-              <app-post-card
-                *ngFor="let post of posts"
-                [post]="post"></app-post-card>
-            </ng-container>
-          </ul>
+          <div class="bg-white px-4 py-5 sm:grid sm:px-6">
+            <ul
+              role="list"
+              class="divide-y divide-gray-200 rounded-md border border-gray-200">
+              <ng-container *ngIf="posts$ | async as posts">
+                <app-post-card
+                  *ngFor="let post of posts"
+                  [post]="post"></app-post-card>
+              </ng-container>
+            </ul>
+          </div>
         </div>
-      </div>
+      </article>
+      <article>
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              Your post list
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              Displays a list of posts from you.
+            </p>
+          </div>
+
+          <div class="bg-white px-4 py-5 sm:grid sm:px-6">
+            <ul
+              role="list"
+              class="divide-y divide-gray-200 rounded-md border border-gray-200">
+              <ng-container *ngIf="yourPosts$ | async as posts">
+                <app-post-card
+                  [authorRole]="authorRole"
+                  [adminRole]="adminRole"
+                  [auth_user]="auth_user"
+                  *ngFor="let post of posts"
+                  [post]="post"></app-post-card>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </article>
     </section>
   `,
   styles: [],
 })
 export class PostListComponent implements OnInit {
   private postService: PostService = inject(PostService);
+  private authService: AuthService = inject(AuthService);
   public toastrService: ToastrService = inject(ToastrService);
+
+  authorRole = ROLE.AUTHOR;
+  adminRole = ROLE.ADMIN;
+  auth_user!: IDummyAuthUser | null;
 
   options = {
     autoClose: true,
@@ -53,9 +93,14 @@ export class PostListComponent implements OnInit {
   };
 
   posts$!: Observable<IPost[]>;
+  yourPosts$!: Observable<IPost[]>;
 
   ngOnInit() {
     this.posts$ = this.postService.getPosts();
+    this.yourPosts$ = this.postService.getAllPostsByUserId(
+      this.auth_user?.id || 0
+    );
+    this.auth_user = this.authService.getAuthUser();
   }
 
   trackById(index: number, item: IPost) {

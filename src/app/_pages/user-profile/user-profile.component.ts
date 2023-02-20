@@ -39,6 +39,9 @@ import { Observable, switchMap } from "rxjs";
                 <p class="mb-0 font-semibold leading-normal text-size-sm">
                   {{ (profile$ | async)?.company?.title }}
                 </p>
+                <p class="mb-0 font-semibold leading-normal text-size-sm">
+                  {{ (profile$ | async)?.role }}
+                </p>
               </div>
             </div>
             <div

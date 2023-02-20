@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { IPost } from "@app/_shared/_models";
+import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { RouterModule } from "@angular/router";
 
 @Component({
@@ -29,9 +29,19 @@ import { RouterModule } from "@angular/router";
           >View</a
         >
         <a
-          [routerLink]="['/posts', post.id, 'edit']"
+          *ngIf="auth_user?.role == authorRole && auth_user?.id === post.userId"
+          [routerLink]="[null]"
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >Edit</a
+        >
+        <a
+          *ngIf="
+            auth_user?.role == adminRole ||
+            (auth_user?.role == authorRole && auth_user?.id === post.userId)
+          "
+          [routerLink]="[null]"
+          class="font-medium text-indigo-600 hover:text-indigo-500"
+          >Delete</a
         >
       </div>
     </li>
@@ -40,4 +50,7 @@ import { RouterModule } from "@angular/router";
 })
 export class PostCardComponent {
   @Input() post!: IPost;
+  @Input() adminRole!: ROLE;
+  @Input() authorRole!: ROLE;
+  @Input() auth_user!: IDummyAuthUser | null;
 }
