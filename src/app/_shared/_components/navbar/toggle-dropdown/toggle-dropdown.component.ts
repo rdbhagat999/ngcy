@@ -29,7 +29,7 @@ import { takeUntil, filter, tap } from "rxjs";
         <img
           class="h-8 w-8 rounded-full"
           src="/assets/navbar_avatar.avif"
-          alt="" />
+          alt="avatar" />
       </button>
     </div>
   `,
