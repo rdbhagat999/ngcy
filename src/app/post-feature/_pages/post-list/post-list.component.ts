@@ -19,9 +19,7 @@ import { ToastrService } from "@app/toastr";
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
-      [class.md:grid-cols-2]="{
-        'md:grid-cols-2': auth_user?.role === authorRole
-      }"
+      [class.md:grid-cols-2]="auth_user?.role === authorRole"
       class="post-list grid grid-cols-1 gap-4">
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -40,6 +38,7 @@ import { ToastrService } from "@app/toastr";
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
               <ng-container *ngIf="posts$ | async as posts">
                 <app-post-card
+                  [auth_user]="auth_user"
                   *ngFor="let post of posts"
                   [post]="post"></app-post-card>
               </ng-container>
@@ -63,13 +62,11 @@ import { ToastrService } from "@app/toastr";
             <ul
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
-              <ng-container *ngIf="yourPosts$ | async as posts">
+              <ng-container *ngIf="yourPosts$ | async as yourPosts">
                 <app-post-card
-                  [authorRole]="authorRole"
-                  [adminRole]="adminRole"
                   [auth_user]="auth_user"
-                  *ngFor="let post of posts"
-                  [post]="post"></app-post-card>
+                  *ngFor="let yourPost of yourPosts"
+                  [post]="yourPost"></app-post-card>
               </ng-container>
             </ul>
           </div>

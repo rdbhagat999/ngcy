@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { RouterModule } from "@angular/router";
+import { JsonPipe, NgIf } from "@angular/common";
 
 @Component({
   selector: "app-post-card",
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf, JsonPipe],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
@@ -49,8 +50,8 @@ import { RouterModule } from "@angular/router";
   styles: [],
 })
 export class PostCardComponent {
+  adminRole: ROLE = ROLE.ADMIN;
+  authorRole: ROLE = ROLE.AUTHOR;
   @Input() post!: IPost;
-  @Input() adminRole!: ROLE;
-  @Input() authorRole!: ROLE;
   @Input() auth_user!: IDummyAuthUser | null;
 }
