@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy } from "@angular/core";
-import { CommonModule, NgClass, NgIf } from "@angular/common";
+import { NgClass, NgIf } from "@angular/common";
 import {
   FormBuilder,
   FormGroup,
