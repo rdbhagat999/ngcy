@@ -210,11 +210,9 @@ export class LoginComponent {
   ngOnInit(): void {
     this.initForm();
 
-    this.sub2$ = this.authService.auth_user$.subscribe((user) => {
-      if (user?.id) {
-        this.router.navigate(["/"]);
-      }
-    });
+    if (this.authService.getAuthUser()) {
+      this.router.navigate(["/"]);
+    }
   }
 
   initForm() {

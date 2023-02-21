@@ -1,6 +1,6 @@
 import { Route } from "@angular/router";
 import { HomeComponent } from "@app/_pages";
-import { AuthGuard } from "./_shared/guards";
+import { AuthGuard, RegisterDeactivateGuard } from "./_shared/guards";
 
 export const APP_ROUTES: Route[] = [
   {
@@ -21,6 +21,7 @@ export const APP_ROUTES: Route[] = [
   },
   {
     path: "register",
+    canDeactivate: [RegisterDeactivateGuard],
     loadComponent: () =>
       import("@app/_pages").then((mod) => mod.RegisterComponent),
   },
