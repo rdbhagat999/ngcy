@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from "@angular/core";
-import { AsyncPipe, CommonModule, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { filter, Observable, takeUntil, tap } from "rxjs";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -29,8 +29,7 @@ To: "transform opacity-0 scale-95"
   selector: "app-navbar",
   standalone: true,
   imports: [
-    AsyncPipe,
-    NgIf,
+    CommonModule,
     RouterModule,
     ToggleNavbarComponent,
     MobileNavbarComponent,

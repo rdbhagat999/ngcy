@@ -14,21 +14,16 @@ import {
   transition,
   animate,
 } from "@angular/animations";
-import {
-  NavigationEnd,
-  NavigationStart,
-  Router,
-  RouterModule,
-} from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
 import { LifeCycleDirective } from "@app/_shared/_directives";
-import { takeUntil, filter, tap } from "rxjs";
 
 @Component({
   selector: "app-profile-dropdown",
   standalone: true,
-  imports: [CommonModule, RouterModule, NgIf],
+  imports: [CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [LifeCycleDirective],
   animations: [
     trigger("openCloseDropdown", [
       state(
@@ -80,8 +75,8 @@ import { takeUntil, filter, tap } from "rxjs";
   styles: [],
 })
 export class ProfileDropdownComponent {
-  private router: Router = inject(Router);
-  private lifeCycleDirective = inject(LifeCycleDirective);
+  // private router: Router = inject(Router);
+  // private lifeCycleDirective = inject(LifeCycleDirective);
   @Input() isDropdownOpen = false;
   @Input() auth_user!: IDummyAuthUser | null;
   @Output() logoutEvent = new EventEmitter();

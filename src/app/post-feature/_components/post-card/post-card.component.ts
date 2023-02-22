@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { RouterModule } from "@angular/router";
-import { JsonPipe, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
 
 @Component({
   selector: "app-post-card",
   standalone: true,
-  imports: [RouterModule, NgIf, JsonPipe, HighlightDirective, TooltipDirective],
+  imports: [RouterModule, CommonModule, HighlightDirective, TooltipDirective],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">

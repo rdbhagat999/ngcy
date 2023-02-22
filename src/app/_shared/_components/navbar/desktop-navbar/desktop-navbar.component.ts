@@ -1,4 +1,4 @@
-import { CommonModule, NgForOf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
@@ -6,12 +6,13 @@ import { IDummyAuthUser } from "@app/_shared/_models";
 @Component({
   selector: "app-desktop-navbar",
   standalone: true,
-  imports: [CommonModule, RouterModule, NgForOf],
+  imports: [CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex space-x-4">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <a
+        [attr.data-cy]="link?.label"
         *ngFor="let link of navLinks"
         [routerLink]="link?.path"
         routerLinkActive="bg-gray-900 text-white"
@@ -23,6 +24,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
 
       <ng-container *ngIf="!auth_user">
         <a
+          data-cy="login"
           routerLink="/login"
           routerLinkActive="bg-gray-900 text-white"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -32,6 +34,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
         >
 
         <a
+          data-cy="register"
           routerLink="/register"
           routerLinkActive="bg-gray-900 text-white"
           [routerLinkActiveOptions]="{ exact: true }"

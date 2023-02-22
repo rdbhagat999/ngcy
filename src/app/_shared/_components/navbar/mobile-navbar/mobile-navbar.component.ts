@@ -5,7 +5,7 @@ import {
   transition,
   animate,
 } from "@angular/animations";
-import { CommonModule, NgForOf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
@@ -13,7 +13,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
 @Component({
   selector: "app-mobile-navbar",
   standalone: true,
-  imports: [CommonModule, RouterModule, NgForOf],
+  imports: [CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger("openCloseMobileMenu", [

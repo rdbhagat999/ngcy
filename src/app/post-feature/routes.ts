@@ -7,7 +7,7 @@ export const POST_ROUTES: Route[] = [
   {
     path: "",
     pathMatch: "prefix",
-    providers: [PostService],
+    providers: [{ provide: PostService, useClass: PostService }],
     children: [
       { path: "", component: PostListComponent },
       { path: ":id", component: PostDetailComponent },

@@ -8,14 +8,15 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { IDummyAuthUser } from "@app/_shared/_models";
-import { Router, NavigationEnd } from "@angular/router";
+import { Router, NavigationEnd, RouterModule } from "@angular/router";
 import { LifeCycleDirective } from "@app/_shared/_directives";
 import { takeUntil, filter, tap } from "rxjs";
 
 @Component({
   selector: "app-toggle-dropdown",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
+  hostDirectives: [LifeCycleDirective],
   template: `
     <div *ngIf="auth_user">
       <button
