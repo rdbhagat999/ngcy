@@ -54,6 +54,7 @@ import { LifeCycleDirective } from "@app/_shared/_directives";
     tabindex="-1">
     <!-- Active: "bg-gray-100", Not Active: "" -->
     <a
+      data-cy="profile-link"
       [routerLink]="['/profile', auth_user.id]"
       (click)="navigateToUserProfile()"
       class="cursor-pointer inline-block px-4 py-2 text-sm text-gray-700"
@@ -63,6 +64,7 @@ import { LifeCycleDirective } from "@app/_shared/_directives";
       >Your Profile</a
     >
     <a
+      data-cy="logout-link"
       routerLink="null"
       (click)="handleLogout()"
       class="block px-4 py-2 text-sm text-gray-700"

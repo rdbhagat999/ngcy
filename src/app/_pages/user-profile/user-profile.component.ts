@@ -14,8 +14,7 @@ import { Observable, switchMap } from "rxjs";
       class="ease-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200"
       id="profile">
       <ng-container *ngIf="profile$ | async as profile">
-        <div
-          class="w-full px-6 py-6 mx-auto drop-zone loopple-min-height-78vh text-slate-500">
+        <div class="w-full px-6 py-6 mx-auto drop-zone text-slate-500">
           <div
             class="relative flex flex-col flex-auto min-w-0 p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4 draggable"
             draggable="true">
@@ -39,7 +38,9 @@ import { Observable, switchMap } from "rxjs";
                   <p class="mb-0 font-semibold leading-normal text-size-sm">
                     {{ profile?.company?.title }}
                   </p>
-                  <p class="mb-0 font-semibold leading-normal text-size-sm">
+                  <p
+                    data-cy="role"
+                    class="mb-0 font-semibold leading-normal text-size-sm">
                     {{ profile?.role }}
                   </p>
                 </div>
@@ -59,7 +60,11 @@ import { Observable, switchMap } from "rxjs";
                     <div class="flex flex-wrap -mx-3">
                       <div
                         class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
-                        <h6 class="mb-0">Profile Information</h6>
+                        <h6
+                          class="mb-0"
+                          data-cy="profile-info">
+                          Profile Information
+                        </h6>
                       </div>
                       <div
                         class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">

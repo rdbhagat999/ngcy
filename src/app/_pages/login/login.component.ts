@@ -31,6 +31,7 @@ import { ToastrService } from "@app/toastr";
           class="text-white mb-4">
           <label class="text-gray-900 dark:text-white">
             <input
+              data-cy="user"
               type="radio"
               formControlName="loginRole"
               value="USER"
@@ -39,6 +40,7 @@ import { ToastrService } from "@app/toastr";
           </label>
           <label class="text-gray-900 dark:text-white">
             <input
+              data-cy="author"
               type="radio"
               formControlName="loginRole"
               value="AUTHOR"
@@ -47,6 +49,7 @@ import { ToastrService } from "@app/toastr";
           </label>
           <label class="text-gray-900 dark:text-white">
             <input
+              data-cy="admin"
               type="radio"
               formControlName="loginRole"
               value="ADMIN"
@@ -131,6 +134,7 @@ import { ToastrService } from "@app/toastr";
               </div>
 
               <button
+                data-cy="login-btn"
                 [disabled]="form.invalid || isFormSubmitted"
                 type="submit"
                 [ngClass]="{

@@ -20,6 +20,7 @@ import { takeUntil, filter, tap } from "rxjs";
   template: `
     <div *ngIf="auth_user">
       <button
+        data-cy="toggle-dropdown"
         (click)="handleToggleDropdown()"
         type="button"
         class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
