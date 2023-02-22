@@ -21,5 +21,5 @@ import { RouterModule } from "@angular/router";
   styles: [],
 })
 export class HeaderComponent {
-  title = "Cypress & Angular Standalone Components Demo";
+  title = "I am available for hire @ USD 12/hour";
 }

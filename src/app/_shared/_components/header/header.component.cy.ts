@@ -1,7 +1,7 @@
 import { mount } from "cypress/angular";
 import { HeaderComponent } from "./header.component";
 
-const title = "Cypress & Angular Standalone Components Demo";
+const title = "I am available for hire @ USD 12/hour";
 
 describe("HeaderComponent", () => {
   it("mounts", () => {
