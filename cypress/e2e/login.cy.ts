@@ -1,3 +1,10 @@
+/*
+Run these commands in two different terminals
+1. npm start
+2. npm run test
+3. After new browser window opens select E2E
+*/
+
 describe("Login process", () => {
   it("passes as USER", () => {
     cy.visit("http://localhost:4200");
