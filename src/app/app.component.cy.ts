@@ -14,6 +14,8 @@ import {
 } from "./_shared/_interceptors";
 import { BACKEND_URL } from "./_shared/_models";
 
+const title = "I am available for hire @ USD 12/hour";
+
 describe("AppComponent", () => {
   it("mounts", () => {
     mount(AppComponent, {
@@ -34,5 +36,7 @@ describe("AppComponent", () => {
         provideRouter([...APP_ROUTES]),
       ],
     });
+
+    cy.get('[data-cy="title"]').contains(title);
   });
 });
