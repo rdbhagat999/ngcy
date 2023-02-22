@@ -186,6 +186,7 @@ export class RegisterComponent implements OnDestroy {
   form!: FormGroup;
   isFormSubmitted = false;
   sub$!: Subscription;
+  timer: number = 0;
   private fb: FormBuilder = inject(FormBuilder);
   private authService: AuthService = inject(AuthService);
   private checkUsernameExistsAsyncValidator = inject(
@@ -249,6 +250,11 @@ export class RegisterComponent implements OnDestroy {
 
     // Form field values
     console.log(this.form?.value);
+
+    this.timer = window.setTimeout(() => {
+      this.isFormSubmitted = false;
+      alert(JSON.stringify(this.form.value));
+    }, 1500);
   }
 
   canDeactivate() {
@@ -259,6 +265,7 @@ export class RegisterComponent implements OnDestroy {
 
   ngOnDestroy() {
     if (this.sub$) {
+      clearTimeout(this.timer);
       this.sub$.unsubscribe();
     }
   }
