@@ -7,7 +7,11 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="home">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Home page</h3>
+      <h3
+        data-cy="title"
+        class="text-lg font-medium leading-6 text-gray-900">
+        Home page
+      </h3>
     </section>
   `,
   styles: [],

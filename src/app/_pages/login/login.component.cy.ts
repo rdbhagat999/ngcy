@@ -1,7 +1,6 @@
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import { ErrorHandler, importProvidersFrom } from "@angular/core";
+import { importProvidersFrom } from "@angular/core";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { provideRouter } from "@angular/router";
 import { AuthService } from "@app/_services";
 import {
   errorInterceptor,
@@ -15,8 +14,9 @@ import { LoginComponent } from "./login.component";
 const API_URL = "https://dummyjson.com";
 const title = "Sign in to your account";
 const username = "atuny0";
-const password = "9uQFF1Lh";
 const email = "atuny0@sohu.com";
+const password = "9uQFF1Lh";
+const wrong_password = "12345";
 
 describe("LoginComponent", () => {
   it("mounts", () => {
@@ -71,7 +71,7 @@ describe("LoginComponent", () => {
     });
   });
 
-  it("should fail login as USER", () => {
+  it("should fail to login as USER", () => {
     mount(LoginComponent, {
       imports: [LoginComponent],
       providers: [
@@ -87,8 +87,6 @@ describe("LoginComponent", () => {
         ),
       ],
     });
-
-    const wrong_password = "12345";
 
     cy.get("[data-cy=title]").contains(title);
     cy.get("[data-cy=user]").first().click();

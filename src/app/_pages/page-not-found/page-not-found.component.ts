@@ -60,7 +60,9 @@ import { RouterModule } from "@angular/router";
       </svg>
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
-          <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+          <h2
+            data-cy="title"
+            class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             404 - Not Found
           </h2>
           <p class="mt-6 text-lg leading-8 text-gray-300">

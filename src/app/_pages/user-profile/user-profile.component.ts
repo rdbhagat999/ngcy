@@ -172,12 +172,14 @@ export class UserProfileComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   profile$!: Observable<IDummyJsonUser>;
+  userId = 0;
 
   ngOnInit() {
     this.profile$ = this.route.paramMap.pipe(
-      switchMap((params) =>
-        this.authService.getProfileData(+(params.get("id") ?? 0))
-      )
+      switchMap((params) => {
+        this.userId = +(params.get("id") ?? 0);
+        return this.authService.getProfileData(this.userId);
+      })
     );
   }
 }

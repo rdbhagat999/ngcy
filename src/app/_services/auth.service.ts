@@ -41,7 +41,7 @@ export class AuthService {
 
   getProfileData(userId: number) {
     return this.http.get<IDummyJsonUser>(
-      `${this._backend_url}/auth/users/${userId}`
+      `${this._backend_url}/users/${userId}`
     );
   }
 

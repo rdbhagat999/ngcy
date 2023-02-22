@@ -8,7 +8,7 @@ describe("HeaderComponent", () => {
     mount(HeaderComponent);
   });
 
-  it(`has title ${title}`, () => {
+  it(`have title ${title}`, () => {
     mount(HeaderComponent, {
       componentProperties: {
         title,
