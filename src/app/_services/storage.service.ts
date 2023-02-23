@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
+import { WINDOW } from "@app/_shared/_models";
 
 const USER_KEY = "storage_user";
 
@@ -6,19 +7,19 @@ const USER_KEY = "storage_user";
   providedIn: "root",
 })
 export abstract class StorageService {
-  constructor() {}
+  private window = inject(WINDOW);
 
   public clean(): void {
-    window.sessionStorage.clear();
+    this.window.sessionStorage.clear();
   }
 
   public saveUserToStorage(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.window.sessionStorage.removeItem(USER_KEY);
+    this.window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
   public getUserFromStorage() {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = this.window.sessionStorage.getItem(USER_KEY);
     if (user) {
       return JSON.parse(user);
     }

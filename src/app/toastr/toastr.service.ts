@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
+import { WINDOW } from "@app/_shared/_models";
 import { BehaviorSubject } from "rxjs";
 import { Toastr, ToastrOptions, ToastrType } from "./toastr";
 
@@ -6,6 +7,7 @@ import { Toastr, ToastrOptions, ToastrType } from "./toastr";
   providedIn: "root",
 })
 export class ToastrService implements OnDestroy {
+  private window = inject(WINDOW);
   private toastrSubject = new BehaviorSubject<Toastr[]>([]);
   private timeoutId!: number;
 
@@ -66,7 +68,7 @@ export class ToastrService implements OnDestroy {
   autoCloseToastr(): void {
     this.toastrSubject.value.forEach((toastr) => {
       if (toastr.autoClose) {
-        this.timeoutId = window.setTimeout(() => {
+        this.timeoutId = this.window.setTimeout(() => {
           this.removeToastr(toastr);
         }, 3000);
       }

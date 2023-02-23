@@ -7,6 +7,7 @@ import {
   NgZone,
   Renderer2,
 } from "@angular/core";
+import { WINDOW } from "../_models";
 
 @Directive({
   selector: "[appTooltip]",
@@ -20,6 +21,7 @@ export class TooltipDirective {
   @Input() appTooltip!: string;
   private delay = 100;
   private myPopup!: HTMLDivElement;
+  private window = inject(WINDOW);
   private timer!: ReturnType<typeof setTimeout>;
 
   private createTooltipPopup(x: number, y: number) {
@@ -33,7 +35,7 @@ export class TooltipDirective {
     this.renderer.appendChild(this.el.nativeElement, popup);
 
     this.myPopup = popup;
-    // setTimeout(() => {
+    // this.window.setTimeout(() => {
     //   if (this.myPopup) {
     //     this.myPopup.remove();
     //   }
@@ -43,7 +45,7 @@ export class TooltipDirective {
   @HostListener("mouseenter")
   handleMouseEnterEvent(): void {
     this.zone.runOutsideAngular(() => {
-      this.timer = setTimeout(() => {
+      this.timer = this.window.setTimeout(() => {
         let x =
           this.el.nativeElement.getBoundingClientRect().left +
           this.el.nativeElement.offsetWidth / 2; // Get the middle of the element

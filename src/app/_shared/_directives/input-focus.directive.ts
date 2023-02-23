@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
+import { WINDOW } from "../_models";
 
 @Directive({
   selector: "[appInputFocus]",
@@ -13,6 +14,7 @@ import {
 })
 export class InputFocusDirective implements OnInit, AfterViewInit, OnDestroy {
   private el: ElementRef = inject(ElementRef);
+  private window = inject(WINDOW);
   private timer: number = 0;
 
   constructor() {}
@@ -24,7 +26,7 @@ export class InputFocusDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.timer = window.setTimeout(() => {
+    this.timer = this.window.setTimeout(() => {
       this.el.nativeElement.focus();
     }, 200);
   }

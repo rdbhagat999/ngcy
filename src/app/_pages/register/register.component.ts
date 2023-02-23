@@ -14,6 +14,7 @@ import {
   passwordMatchValidator,
 } from "@app/_shared/_validators";
 import { InputFocusDirective } from "@app/_shared/_directives";
+import { WINDOW } from "@app/_shared/_models";
 
 @Component({
   selector: "app-register",
@@ -191,6 +192,7 @@ export class RegisterComponent implements OnDestroy {
   timer: number = 0;
   private fb: FormBuilder = inject(FormBuilder);
   private authService: AuthService = inject(AuthService);
+  private window = inject(WINDOW);
   private checkUsernameExistsAsyncValidator = inject(
     CheckUsernameExistsAsyncValidator
   );
@@ -253,7 +255,7 @@ export class RegisterComponent implements OnDestroy {
     // Form field values
     console.log(this.form?.value);
 
-    this.timer = window.setTimeout(() => {
+    this.timer = this.window.setTimeout(() => {
       this.isFormSubmitted = false;
       alert(JSON.stringify(this.form.value));
     }, 1500);
