@@ -23,6 +23,7 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
             clip-rule="evenodd" />
         </svg>
         <span
+          data-cy="post-title"
           class="ml-2 w-0 flex-1 truncate"
           [appTooltip]="post.title"
           >{{ post.title }}</span
@@ -32,12 +33,14 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
         <a
           appHighlight
           [routerLink]="['/posts', post.id]"
+          data-cy="view-post-link"
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >View</a
         >
         <a
           *ngIf="auth_user?.role == authorRole && auth_user?.id === post.userId"
           [routerLink]="[null]"
+          data-cy="edit-post-link"
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >Edit</a
         >
@@ -47,6 +50,7 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
             (auth_user?.role == authorRole && auth_user?.id === post.userId)
           "
           [routerLink]="[null]"
+          data-cy="delete-post-link"
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >Delete</a
         >

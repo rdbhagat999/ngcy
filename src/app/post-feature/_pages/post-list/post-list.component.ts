@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from "@angular/core";
-import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { AuthService, PostService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
@@ -15,7 +15,7 @@ import { ToastrService } from "@app/toastr";
 @Component({
   selector: "app-post-list",
   standalone: true,
-  imports: [NgIf, NgForOf, AsyncPipe, RouterModule, PostCardComponent],
+  imports: [CommonModule, RouterModule, PostCardComponent],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
@@ -24,7 +24,9 @@ import { ToastrService } from "@app/toastr";
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">
+            <h3
+              data-cy="post-list"
+              class="text-lg font-medium leading-6 text-gray-900">
               Post list
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -50,7 +52,9 @@ import { ToastrService } from "@app/toastr";
       <article *ngIf="auth_user?.role === authorRole">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">
+            <h3
+              data-cy="your-post-list"
+              class="text-lg font-medium leading-6 text-gray-900">
               Your post list
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">

@@ -20,10 +20,14 @@ import { PostService } from "@app/_services";
       <div class="overflow-hidden bg-white shadow sm:rounded-lg">
         <ng-container *ngIf="post$ | async as post">
           <div class="px-4 pt-5 sm:px-6">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">
+            <h3
+              data-cy="post-title"
+              class="text-lg font-medium leading-6 text-gray-900">
               {{ post.title }}
             </h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            <p
+              data-cy="post-body"
+              class="mt-1 max-w-2xl text-sm text-gray-500">
               {{ post.body }}
             </p>
           </div>
