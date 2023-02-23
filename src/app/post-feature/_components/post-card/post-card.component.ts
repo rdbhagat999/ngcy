@@ -39,9 +39,8 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
         >
         <a
           *ngIf="auth_user?.role == authorRole && auth_user?.id === post.userId"
-          [routerLink]="[null]"
           data-cy="edit-post-link"
-          class="font-medium text-indigo-600 hover:text-indigo-500"
+          class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Edit</a
         >
         <a
@@ -49,9 +48,8 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
             auth_user?.role == adminRole ||
             (auth_user?.role == authorRole && auth_user?.id === post.userId)
           "
-          [routerLink]="[null]"
           data-cy="delete-post-link"
-          class="font-medium text-indigo-600 hover:text-indigo-500"
+          class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Delete</a
         >
       </div>
