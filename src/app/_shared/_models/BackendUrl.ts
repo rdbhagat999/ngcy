@@ -1,3 +1,3 @@
-export class BACKEND_URL {
-  constructor(API_URL: string = "https://dummyjson.com") {}
-}
+import { InjectionToken } from "@angular/core";
+
+export const BACKEND_API = new InjectionToken<string>("API_URL");

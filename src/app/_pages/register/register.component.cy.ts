@@ -7,7 +7,7 @@ import {
   authInterceptor,
   cacheInterceptor,
 } from "@app/_shared/_interceptors";
-import { BACKEND_URL } from "@app/_shared/_models";
+import { BACKEND_API } from "@app/_shared/_models";
 import { mount } from "cypress/angular";
 import { RegisterComponent } from "./register.component";
 
@@ -21,7 +21,7 @@ describe("RegisterComponent", () => {
       imports: [RegisterComponent],
       providers: [
         importProvidersFrom([NoopAnimationsModule]),
-        { provide: BACKEND_URL, useValue: "https://dummyjson.com" },
+        { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(
           withInterceptors([
@@ -39,7 +39,7 @@ describe("RegisterComponent", () => {
       imports: [RegisterComponent],
       providers: [
         importProvidersFrom([NoopAnimationsModule]),
-        { provide: BACKEND_URL, useValue: "https://dummyjson.com" },
+        { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(
           withInterceptors([

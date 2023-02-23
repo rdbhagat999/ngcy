@@ -12,7 +12,7 @@ import {
   authInterceptor,
   cacheInterceptor,
 } from "./_shared/_interceptors";
-import { BACKEND_URL } from "./_shared/_models";
+import { BACKEND_API } from "./_shared/_models";
 
 const title = "I am available for hire @ USD 12/hour";
 
@@ -22,7 +22,7 @@ describe("AppComponent", () => {
       imports: [AppComponent],
       providers: [
         importProvidersFrom([NoopAnimationsModule]),
-        { provide: BACKEND_URL, useValue: "https://dummyjson.com" },
+        { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: ToastrService, useClass: ToastrService },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(

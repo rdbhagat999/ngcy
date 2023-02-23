@@ -13,12 +13,12 @@ import {
   errorInterceptor,
 } from "@app/_shared/_interceptors";
 
-import { BACKEND_URL } from "@app/_shared/_models/BackendUrl";
+import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom([BrowserAnimationsModule]),
-    { provide: BACKEND_URL, useValue: "https://dummyjson.com" },
+    { provide: BACKEND_API, useValue: "https://dummyjson.com" },
     { provide: ToastrService, useClass: ToastrService },
     { provide: AuthService, useClass: AuthService },
     provideHttpClient(

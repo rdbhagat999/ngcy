@@ -8,7 +8,7 @@ import {
   authInterceptor,
   cacheInterceptor,
 } from "@app/_shared/_interceptors";
-import { BACKEND_URL } from "@app/_shared/_models";
+import { BACKEND_API } from "@app/_shared/_models";
 import { mount } from "cypress/angular";
 import { UserProfileComponent } from "./user-profile.component";
 
@@ -20,7 +20,7 @@ describe("UserProfileComponent", () => {
       imports: [UserProfileComponent, HttpClientTestingModule],
       providers: [
         provideRouter([...APP_ROUTES]),
-        { provide: BACKEND_URL, useValue: "https://dummyjson.com" },
+        { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(
           withInterceptors([

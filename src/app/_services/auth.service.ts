@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { IDummyAuthUser, IDummyJsonUser } from "@app/_shared/_models";
-import { BACKEND_URL } from "@app/_shared/_models/BackendUrl";
+import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { StorageService } from "./storage.service";
 
@@ -13,7 +13,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private storageservice: StorageService = inject(StorageService);
-  private _backend_url = inject(BACKEND_URL);
+  private _backend_url = inject(BACKEND_API);
   private auth_user = new BehaviorSubject<IDummyAuthUser | null>(null);
 
   auth_user$ = this.auth_user.asObservable();

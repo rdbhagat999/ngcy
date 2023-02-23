@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { IPost } from "@app/_shared/_models";
-import { BACKEND_URL } from "@app/_shared/_models/BackendUrl";
+import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
 import { Observable, map } from "rxjs";
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable, map } from "rxjs";
 })
 export class PostService {
   private _http = inject(HttpClient);
-  private _backend_url = inject(BACKEND_URL);
+  private _backend_url = inject(BACKEND_API);
 
   constructor() {}
 
