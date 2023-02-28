@@ -32,6 +32,14 @@ export const APP_ROUTES: Route[] = [
       import("@app/_pages").then((mod) => mod.UserProfileComponent),
   },
   {
+    path: "products",
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import("@app/product-list/product-list.component").then(
+        (mod) => mod.ProductListComponent
+      ),
+  },
+  {
     path: "about",
     loadComponent: () =>
       import("@app/_pages").then((mod) => mod.AboutComponent),

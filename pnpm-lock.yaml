@@ -15,6 +15,8 @@ specifiers:
   '@angular/platform-browser': ^15.2.0
   '@angular/platform-browser-dynamic': ^15.2.0
   '@angular/router': ^15.2.0
+  ag-grid-angular: ^29.1.0
+  ag-grid-community: ^29.1.0
   angular-cli-ghpages: ^1.0.5
   autoprefixer: ^10.4.13
   cypress: ^12.6.0
@@ -34,6 +36,8 @@ dependencies:
   '@angular/platform-browser': 15.2.0_soizqph2fnjracxavakx67hoyq
   '@angular/platform-browser-dynamic': 15.2.0_q3vtycdixm4mw4ocqkr6ifs2ty
   '@angular/router': 15.2.0_za6jdduxquwsf5arpf6dzdovcm
+  ag-grid-angular: 29.1.0_faqefvnko73kb7nza3zwiyozju
+  ag-grid-community: 29.1.0
   rxjs: 7.8.0
   tslib: 2.5.0
   zone.js: 0.12.0
@@ -2370,6 +2374,23 @@ packages:
       loader-utils: 2.0.4
       regex-parser: 2.2.11
     dev: true
+
+  /ag-grid-angular/29.1.0_faqefvnko73kb7nza3zwiyozju:
+    resolution: {integrity: sha512-Kp3mRsWeRbiyaeN5WulifavqibsFjPtoOqkBMSnwzhecEadvbxN2RPn0K8nsCFWMVl/V0yhrhadviqT9jpKhFg==}
+    peerDependencies:
+      '@angular/common': '>= 12.0.0'
+      '@angular/core': '>= 12.0.0'
+      ag-grid-community: ~29.1.0
+    dependencies:
+      '@angular/common': 15.2.0_6rl5h76dm6n755x2qkojsrrx44
+      '@angular/core': 15.2.0_rxjs@7.8.0+zone.js@0.12.0
+      ag-grid-community: 29.1.0
+      tslib: 2.5.0
+    dev: false
+
+  /ag-grid-community/29.1.0:
+    resolution: {integrity: sha512-QJZi1qP7fpK/sxXbEFZWR3/Jf3HVRK0Xm3Tw55tn0ehNdkuSxRBOmOvjE3lPWqgRlT2rcL1xmjdqM4mpB1fobQ==}
+    dev: false
 
   /agent-base/6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}

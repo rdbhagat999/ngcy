@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+
 @keyframes tooltip-slide {
   0% {
     opacity: 0;
