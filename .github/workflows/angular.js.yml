@@ -70,8 +70,7 @@ jobs:
         run: |
           npm run build \
             -- --output-path dist \
-            --base-href "${{ steps.pages.outputs.base_path }}/" \
-            --deploy-url "${{ steps.pages.outputs.base_path }}/"
+            --base-href "${{ steps.pages.outputs.base_path }}/"
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: Upload artifact
