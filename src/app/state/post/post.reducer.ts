@@ -13,8 +13,7 @@ export const postReducer = createReducer(
   postInitialState,
   on(loadPostsAction, (state) => state),
   on(loadPostsSuccessAction, (state, { postApiResponse }) => ({
-    currentPost: null,
-    yourPosts: [],
+    ...state,
     ...postApiResponse,
   })),
 
