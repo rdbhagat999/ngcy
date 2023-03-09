@@ -19,20 +19,24 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     },
   });
 
-  return next(cloneReq).pipe(
-    map((response: HttpEvent<any>) => {
-      if (response instanceof HttpResponse) {
-        if (response?.ok) {
-          if (response.body.username === "kminchelle") {
-            response.body.role = ROLE.ADMIN;
-          } else if (response.body.username === "hbingley1") {
-            response.body.role = ROLE.AUTHOR;
-          } else {
-            response.body.role = ROLE.USER;
+  if (req.url.includes("/auth/login") || req.url.includes("/users")) {
+    return next(cloneReq).pipe(
+      map((response: HttpEvent<any>) => {
+        if (response instanceof HttpResponse) {
+          if (response?.ok) {
+            if (response.body.username === "kminchelle") {
+              response.body.role = ROLE.ADMIN;
+            } else if (response.body.username === "hbingley1") {
+              response.body.role = ROLE.AUTHOR;
+            } else {
+              response.body.role = ROLE.USER;
+            }
           }
         }
-      }
-      return response;
-    })
-  );
+        return response;
+      })
+    );
+  }
+
+  return next(cloneReq);
 };

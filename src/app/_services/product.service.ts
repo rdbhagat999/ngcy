@@ -1,11 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+
 import {
   BACKEND_API,
   IProduct,
   IProductsAPIResponse,
 } from "@app/_shared/_models";
-import { Observable, map } from "rxjs";
+import { Store } from "@ngrx/store";
+import { Observable, map, tap, switchMap } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -13,6 +15,9 @@ import { Observable, map } from "rxjs";
 export class ProductService {
   private _http = inject(HttpClient);
   private _backend_url = inject(BACKEND_API);
+  private store: Store<{ response: IProductsAPIResponse }> = inject(
+    Store<{ response: IProductsAPIResponse }>
+  );
 
   constructor() {}
 
@@ -30,7 +35,6 @@ export class ProductService {
         reportProgress: false,
       }
     );
-    // .pipe(map((data) => data?.products));
   }
 
   getProductById(id: number): Observable<IProduct> {

@@ -1,13 +1,19 @@
 import { CommonModule } from "@angular/common";
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnInit,
   ViewChild,
 } from "@angular/core";
+import { productFeature, productFeatureKey, selectProducts } from "@app/state";
+import { loadProductsAction } from "@app/state/product/product.actions";
+import { ProductEffects } from "@app/state/product/product.effects";
 import { ProductService } from "@app/_services/product.service";
 import { LifeCycleDirective } from "@app/_shared/_directives";
 import { IProductsAPIResponse } from "@app/_shared/_models";
+import { Store } from "@ngrx/store";
 import { AgGridAngular, AgGridModule } from "ag-grid-angular";
 import {
   CellClickedEvent,
@@ -24,6 +30,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, AgGridModule, ImageCellComponent],
   hostDirectives: [LifeCycleDirective],
+  providers: [ProductEffects],
   template: `
     <div class="space-x-4">
       <button
@@ -38,7 +45,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
         Clear Selection
       </button>
     </div>
-    <!-- AG Grid Angular Component -->
+
     <ag-grid-angular
       style="width: 840px; height: 300px"
       class="ag-theme-alpine"
@@ -88,8 +95,11 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
   `,
   styles: [],
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit, AfterViewInit {
   private productService: ProductService = inject(ProductService);
+  private store: Store<{ [productFeatureKey]: IProductsAPIResponse }> = inject(
+    Store<{ [productFeatureKey]: IProductsAPIResponse }>
+  );
   private gridApi!: GridApi;
   public currentPage = 0;
   public paginationPageSize = 10;
@@ -125,10 +135,33 @@ export class ProductListComponent {
 
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
+  constructor() {
+    this.store.dispatch(
+      loadProductsAction({
+        page: this.currentPage,
+        limit: this.paginationPageSize,
+      })
+    );
+  }
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.rowData$ = this.store
+      .select((state) => state[productFeatureKey])
+      .pipe(
+        tap((data) => {
+          console.log("dataaaaaaaaaaaaaaaa");
+          console.log(data);
+          this.onBtHide();
+        })
+      );
+  }
+
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.fetchProducts();
     this.currentPage = this.gridApi.paginationGetCurrentPage();
+    // this.fetchProducts();
   }
 
   onCellClicked(e: CellClickedEvent): void {
@@ -162,10 +195,15 @@ export class ProductListComponent {
       map((data) => data?.total)
     );
 
-    total$.subscribe((total) => {
+    const sub$ = total$.subscribe((total) => {
       this.currentPage = total / this.paginationPageSize - 1;
       this.fetchProducts();
     });
+
+    if (sub$) {
+      sub$.unsubscribe();
+      console.log("unsubscribed");
+    }
   }
 
   onBtnNext() {
@@ -195,9 +233,21 @@ export class ProductListComponent {
   fetchProducts() {
     this.onBtShowLoading();
 
-    this.rowData$ = this.productService
-      .getProducts(this.currentPage, this.paginationPageSize)
-      .pipe(tap((_) => this.onBtHide()));
+    // this.rowData$ = this.productService
+    //   .getProducts(this.currentPage, this.paginationPageSize)
+    //   .pipe(
+    //     tap((data) => {
+    //       console.log(data);
+    //       this.onBtHide();
+    //     })
+    //   );
+
+    this.store.dispatch(
+      loadProductsAction({
+        page: this.currentPage,
+        limit: this.paginationPageSize,
+      })
+    );
   }
 
   // Example using Grid's API

@@ -11,6 +11,9 @@ import { PostCardComponent } from "@app/post-feature/_components/post-card/post-
 import { Observable } from "rxjs";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
+import { Store } from "@ngrx/store";
+import { postFeatureKey, selectPosts } from "@app/state";
+import { loadPostsAction } from "@app/state/post/post.actions";
 
 @Component({
   selector: "app-post-list",
@@ -84,6 +87,9 @@ export class PostListComponent implements OnInit {
   private postService: PostService = inject(PostService);
   private authService: AuthService = inject(AuthService);
   public toastrService: ToastrService = inject(ToastrService);
+  private store: Store<{ [postFeatureKey]: IPost[] }> = inject(
+    Store<{ [postFeatureKey]: IPost[] }>
+  );
 
   authorRole = ROLE.AUTHOR;
   adminRole = ROLE.ADMIN;
@@ -97,12 +103,23 @@ export class PostListComponent implements OnInit {
   posts$!: Observable<IPost[]>;
   yourPosts$!: Observable<IPost[]>;
 
+  constructor() {
+    this.store.dispatch(loadPostsAction({ limit: 10 }));
+  }
+
   ngOnInit() {
     this.auth_user = this.authService.getAuthUser();
-    this.posts$ = this.postService.getPosts();
+    this.posts$ = this.store.select((state) => state[postFeatureKey]);
     this.yourPosts$ = this.postService.getAllPostsByUserId(
       this.auth_user?.id || 0
     );
+
+    // this.store
+    //   .select((state) => state[postFeatureKey])
+    //   .subscribe((posts) => {
+    //     console.log("post data");
+    //     console.log(posts);
+    //   });
   }
 
   trackById(index: number, item: IPost) {
