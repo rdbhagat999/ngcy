@@ -1,4 +1,3 @@
-import { IProductsAPIResponse } from "@app/_shared/_models";
 import { createReducer, on } from "@ngrx/store";
 import {
   addProductAction,
@@ -6,16 +5,10 @@ import {
   loadProductsSuccessAction,
   removeProductAction,
 } from "./product.actions";
-
-export const initialState: IProductsAPIResponse = {
-  products: [],
-  total: 0,
-  skip: 0,
-  limit: 10,
-};
+import { productInitialState } from "./product.state";
 
 export const productReducer = createReducer(
-  initialState,
+  productInitialState,
   on(addProductAction, (state, { product }) => ({
     ...state,
     products: [...state.products, product],

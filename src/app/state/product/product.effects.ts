@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ProductService } from "@app/_services/product.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { of } from "rxjs";
-import { map, exhaustMap, catchError } from "rxjs/operators";
+import { map, exhaustMap } from "rxjs/operators";
 import {
   loadProductsAction,
-  LoadProductsFailureActionType,
   loadProductsSuccessAction,
 } from "./product.actions";
 
@@ -22,9 +20,9 @@ export class ProductEffects {
       exhaustMap((action) => {
         console.log("action", action);
         return this.productService.getProducts(action.page, action.limit).pipe(
-          map((productApiRes) => {
+          map((productApiResponse) => {
             return loadProductsSuccessAction({
-              productApiResponse: productApiRes,
+              productApiResponse,
             });
           })
           // catchError(() => of({ type: LoadProductsFailureActionType }))

@@ -6,14 +6,17 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { AuthService, PostService } from "@app/_services";
+import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
 import { Observable } from "rxjs";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 import { Store } from "@ngrx/store";
-import { selectPostsFeature } from "@app/state";
-import { loadPostsAction } from "@app/state/post/post.actions";
+import {
+  loadPostsAction,
+  loadPostsByUserIdAction,
+} from "@app/state/post/post.actions";
+import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
 
 @Component({
   selector: "app-post-list",
@@ -84,7 +87,6 @@ import { loadPostsAction } from "@app/state/post/post.actions";
   styles: [],
 })
 export class PostListComponent implements OnInit {
-  private postService: PostService = inject(PostService);
   private authService: AuthService = inject(AuthService);
   public toastrService: ToastrService = inject(ToastrService);
   private store: Store = inject(Store);
@@ -99,18 +101,19 @@ export class PostListComponent implements OnInit {
   };
 
   posts$!: Observable<readonly IPost[]>;
-  yourPosts$!: Observable<IPost[]>;
+  yourPosts$!: Observable<readonly IPost[]>;
 
   constructor() {
-    this.store.dispatch(loadPostsAction({ limit: 10 }));
+    this.auth_user = this.authService.getAuthUser();
+    this.store.dispatch(loadPostsAction({ page: 0, limit: 10 }));
+    this.store.dispatch(
+      loadPostsByUserIdAction({ userId: this.auth_user?.id || 0 })
+    );
   }
 
   ngOnInit() {
-    this.auth_user = this.authService.getAuthUser();
-    this.posts$ = this.store.select(selectPostsFeature);
-    this.yourPosts$ = this.postService.getAllPostsByUserId(
-      this.auth_user?.id || 0
-    );
+    this.posts$ = this.store.select(selectPosts);
+    this.yourPosts$ = this.store.select(selectYourPosts);
   }
 
   trackById(index: number, item: IPost) {

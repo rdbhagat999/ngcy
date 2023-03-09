@@ -7,7 +7,7 @@ import {
   incrementAction,
   resetAction,
 } from "@app/state/counter/counter.actions";
-import { counterFeatureKey, counterFeature } from "@app/state";
+import { selectCounter } from "@app/state/counter/counter.selectors";
 
 @Component({
   selector: "app-counter",
@@ -39,12 +39,12 @@ import { counterFeatureKey, counterFeature } from "@app/state";
   styles: [],
 })
 export class CounterComponent {
-  private store = inject(Store<{ [counterFeatureKey]: number }>);
+  private store = inject(Store);
 
-  counter$!: Observable<{ counter: number }>;
+  counter$!: Observable<number>;
 
   constructor() {
-    this.counter$ = this.store.select(counterFeature);
+    this.counter$ = this.store.select(selectCounter);
   }
 
   increment() {

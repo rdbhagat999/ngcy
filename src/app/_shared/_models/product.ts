@@ -1,4 +1,4 @@
-export interface IProductsAPIResponse {
+export interface IProductAPIResponse {
   products: IProduct[];
   total: number;
   skip: number;

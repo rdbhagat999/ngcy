@@ -1,15 +1,14 @@
-import { createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import {
   incrementAction,
   decrementAction,
   resetAction,
 } from "./counter.actions";
-
-export const initialState = 0;
+import { counterInitialState } from "./counter.state";
 
 export const counterReducer = createReducer(
-  initialState,
-  on(incrementAction, (state) => state + 1),
-  on(decrementAction, (state) => state - 1),
-  on(resetAction, (state) => 0)
+  counterInitialState,
+  on(incrementAction, (state) => ({ counter: state.counter + 1 })),
+  on(decrementAction, (state) => ({ counter: state.counter - 1 })),
+  on(resetAction, (state) => ({ counter: 0 }))
 );

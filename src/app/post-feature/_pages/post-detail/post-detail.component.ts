@@ -8,13 +8,16 @@ import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
 import { IPost } from "@app/_shared/_models";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { Observable, switchMap } from "rxjs";
-import { PostService } from "@app/_services";
+
+import { Store } from "@ngrx/store";
+import { selectCurrentPost } from "@app/state/post/post.selectors";
+import { loadPostByIdAction } from "@app/state/post/post.actions";
 
 @Component({
   selector: "app-post-detail",
   standalone: true,
   imports: [NgIf, NgForOf, AsyncPipe, RouterModule],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="post-list">
       <div class="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -66,15 +69,23 @@ import { PostService } from "@app/_services";
 })
 export class PostDetailComponent implements OnInit {
   post$!: Observable<IPost>;
+  private store: Store = inject(Store);
 
   private route = inject(ActivatedRoute);
-  private postService = inject(PostService);
 
   ngOnInit(): void {
+    // this.post$ = this.route.paramMap.pipe(
+    //   switchMap((params) =>
+    //     this.postService.getPostById(+(params.get("id") ?? 0))
+    //   )
+    // );
     this.post$ = this.route.paramMap.pipe(
-      switchMap((params) =>
-        this.postService.getPostById(+(params.get("id") ?? 0))
-      )
+      switchMap((params) => {
+        this.store.dispatch(
+          loadPostByIdAction({ id: +(params.get("id") ?? 0) })
+        );
+        return this.store.select(selectCurrentPost);
+      })
     );
   }
 }

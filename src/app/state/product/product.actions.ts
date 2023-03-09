@@ -1,4 +1,4 @@
-import { IProduct, IProductsAPIResponse } from "@app/_shared/_models";
+import { IProduct, IProductAPIResponse } from "@app/_shared/_models";
 import { createAction, props } from "@ngrx/store";
 
 export const AddProductActionType = "[Product Component] AddProduct";
@@ -21,7 +21,7 @@ export const loadProductsAction = createAction(
 
 export const loadProductsSuccessAction = createAction(
   LoadProductsSuccessActionType,
-  props<{ productApiResponse: IProductsAPIResponse }>()
+  props<{ productApiResponse: IProductAPIResponse }>()
 );
 
 export const removeProductAction = createAction(

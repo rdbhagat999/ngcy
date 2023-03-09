@@ -1,26 +1,10 @@
-import { IPost, IProductsAPIResponse } from "@app/_shared/_models";
-import { createFeatureSelector } from "@ngrx/store";
+import { counterFeatureKey } from "./counter/counter.selectors";
+import { CounterState } from "./counter/counter.state";
+import { postFeatureKey, PostState } from "./post/post.state";
+import { productFeatureKey, ProductState } from "./product/product.state";
 
-export const counterFeatureKey = "counter_feature_key";
-export const productFeatureKey = "product_feature_key";
-export const postFeatureKey = "post_feature_key";
-
-// export interface AppState {
-//   [counterFeatureKey]: { counter: number };
-//   [productFeatureKey]: IProductsAPIResponse;
-//   [postFeatureKey]: IPost[];
-// }
-
-// const selectCounterState = (state: AppState) => state[counterFeatureKey];
-// const selectProductsState = (state: AppState) => state[productFeatureKey];
-// const selectPostsState = (state: AppState) => state[postFeatureKey];
-
-export const counterFeature = createFeatureSelector<{ counter: number }>(
-  counterFeatureKey
-);
-
-export const selectProductsFeature =
-  createFeatureSelector<IProductsAPIResponse>(productFeatureKey);
-
-export const selectPostsFeature =
-  createFeatureSelector<ReadonlyArray<IPost>>(postFeatureKey);
+export interface AppState {
+  [counterFeatureKey]: CounterState;
+  [productFeatureKey]: ProductState;
+  [postFeatureKey]: PostState;
+}

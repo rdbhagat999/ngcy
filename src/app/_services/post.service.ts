@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { IPost } from "@app/_shared/_models";
+import { IPost, IPostAPIResponse } from "@app/_shared/_models";
 import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
 import { Observable, map } from "rxjs";
 
@@ -13,25 +13,31 @@ export class PostService {
 
   constructor() {}
 
-  getPosts(limit: number = 5): Observable<IPost[]> {
-    return this._http
-      .get(`${this._backend_url}/auth/posts?limit=${limit}`, {
+  getPosts(page: number = 0, limit: number = 5): Observable<IPostAPIResponse> {
+    const skip = page * limit;
+
+    console.log(page, skip, limit);
+
+    return this._http.get<IPostAPIResponse>(
+      `${this._backend_url}/auth/posts?skip=${skip}&limit=${limit}`,
+      {
         reportProgress: false,
-      })
-      .pipe(map((data: any) => data?.posts as IPost[]));
+      }
+    );
+  }
+
+  getAllPostsByUserId(userId: number): Observable<IPostAPIResponse> {
+    return this._http.get<IPostAPIResponse>(
+      `${this._backend_url}/auth/posts/user/${userId}`,
+      {
+        reportProgress: false,
+      }
+    );
   }
 
   getPostById(postId: number): Observable<IPost> {
     return this._http.get<IPost>(`${this._backend_url}/auth/posts/${postId}`, {
       reportProgress: false,
     });
-  }
-
-  getAllPostsByUserId(userId: number): Observable<IPost[]> {
-    return this._http
-      .get(`${this._backend_url}/auth/posts/user/${userId}`, {
-        reportProgress: false,
-      })
-      .pipe(map((data: any) => data?.posts as IPost[]));
   }
 }

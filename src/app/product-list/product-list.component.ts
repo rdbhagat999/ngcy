@@ -7,10 +7,10 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { selectProductsFeature } from "@app/state";
 import { loadProductsAction } from "@app/state/product/product.actions";
+import { selectProductsApiResponse } from "@app/state/product/product.selectors";
 import { LifeCycleDirective } from "@app/_shared/_directives";
-import { IProductsAPIResponse } from "@app/_shared/_models";
+import { IProductAPIResponse } from "@app/_shared/_models";
 import { Store } from "@ngrx/store";
 import { AgGridAngular, AgGridModule } from "ag-grid-angular";
 import {
@@ -98,7 +98,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   private gridApi!: GridApi;
   public currentPage = 0;
   public paginationPageSize = 10;
-  rowData$!: Observable<IProductsAPIResponse>;
+  rowData$!: Observable<IProductAPIResponse>;
   private lifeCycleDirective = inject(LifeCycleDirective);
 
   // Each Column Definition results in one Column.
@@ -142,7 +142,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.rowData$ = this.store.select(selectProductsFeature).pipe(
+    this.rowData$ = this.store.select(selectProductsApiResponse).pipe(
       tap((_data) => {
         this.onBtHide();
       })

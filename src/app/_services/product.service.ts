@@ -4,7 +4,7 @@ import { inject, Injectable } from "@angular/core";
 import {
   BACKEND_API,
   IProduct,
-  IProductsAPIResponse,
+  IProductAPIResponse,
 } from "@app/_shared/_models";
 import { Store } from "@ngrx/store";
 import { Observable, map, tap, switchMap } from "rxjs";
@@ -15,8 +15,8 @@ import { Observable, map, tap, switchMap } from "rxjs";
 export class ProductService {
   private _http = inject(HttpClient);
   private _backend_url = inject(BACKEND_API);
-  private store: Store<{ response: IProductsAPIResponse }> = inject(
-    Store<{ response: IProductsAPIResponse }>
+  private store: Store<{ response: IProductAPIResponse }> = inject(
+    Store<{ response: IProductAPIResponse }>
   );
 
   constructor() {}
@@ -24,12 +24,12 @@ export class ProductService {
   getProducts(
     page: number = 0,
     limit: number = 5
-  ): Observable<IProductsAPIResponse> {
+  ): Observable<IProductAPIResponse> {
     const skip = page * limit;
 
     console.log(page, skip, limit);
 
-    return this._http.get<IProductsAPIResponse>(
+    return this._http.get<IProductAPIResponse>(
       `${this._backend_url}/auth/products?skip=${skip}&limit=${limit}`,
       {
         reportProgress: false,
