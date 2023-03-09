@@ -1,5 +1,5 @@
-import { IProduct, IProductsAPIResponse } from "@app/_shared/_models";
-import { createReducer, on, createFeatureSelector } from "@ngrx/store";
+import { IProductsAPIResponse } from "@app/_shared/_models";
+import { createReducer, on } from "@ngrx/store";
 import {
   addProductAction,
   loadProductsAction,

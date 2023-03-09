@@ -1,4 +1,4 @@
-import { IPost, IProduct, IProductsAPIResponse } from "@app/_shared/_models";
+import { IPost } from "@app/_shared/_models";
 import { createAction, props } from "@ngrx/store";
 
 export const loadPostsActionType = "[Post Component] Load Posts";

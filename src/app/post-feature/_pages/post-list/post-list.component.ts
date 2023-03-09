@@ -12,14 +12,14 @@ import { Observable } from "rxjs";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 import { Store } from "@ngrx/store";
-import { postFeatureKey, selectPosts } from "@app/state";
+import { postFeatureKey } from "@app/state";
 import { loadPostsAction } from "@app/state/post/post.actions";
 
 @Component({
   selector: "app-post-list",
   standalone: true,
   imports: [CommonModule, RouterModule, PostCardComponent],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
       [class.md:grid-cols-2]="auth_user?.role === authorRole"
@@ -113,13 +113,6 @@ export class PostListComponent implements OnInit {
     this.yourPosts$ = this.postService.getAllPostsByUserId(
       this.auth_user?.id || 0
     );
-
-    // this.store
-    //   .select((state) => state[postFeatureKey])
-    //   .subscribe((posts) => {
-    //     console.log("post data");
-    //     console.log(posts);
-    //   });
   }
 
   trackById(index: number, item: IPost) {

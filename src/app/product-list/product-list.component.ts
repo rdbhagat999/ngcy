@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { productFeature, productFeatureKey, selectProducts } from "@app/state";
+import { productFeatureKey } from "@app/state";
 import { loadProductsAction } from "@app/state/product/product.actions";
 import { ProductEffects } from "@app/state/product/product.effects";
 import { ProductService } from "@app/_services/product.service";
@@ -30,7 +30,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, AgGridModule, ImageCellComponent],
   hostDirectives: [LifeCycleDirective],
-  providers: [ProductEffects],
+  providers: [],
   template: `
     <div class="space-x-4">
       <button
@@ -151,8 +151,6 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       .select((state) => state[productFeatureKey])
       .pipe(
         tap((data) => {
-          console.log("dataaaaaaaaaaaaaaaa");
-          console.log(data);
           this.onBtHide();
         })
       );

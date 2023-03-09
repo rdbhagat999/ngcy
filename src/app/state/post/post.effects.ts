@@ -20,7 +20,6 @@ export class PostEffects {
         console.log("action", action);
         return this.postService.getPosts(action.limit || 10).pipe(
           map((posts) => {
-            console.log("postspostsposts", posts);
             return loadPostsSuccessAction({ posts });
           }),
           catchError(() => of({ type: loadPostsFailureActionType }))

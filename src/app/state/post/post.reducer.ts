@@ -9,7 +9,6 @@ export const postReducer = createReducer(
   on(loadPostsAction, (state) => state),
   on(loadPostsSuccessAction, (state, { posts }) => {
     const updated = [...posts];
-    console.log("loadPostsSuccessAction", updated);
     return updated;
   })
 );
