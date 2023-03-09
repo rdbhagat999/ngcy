@@ -26,8 +26,8 @@ export class ProductEffects {
             return loadProductsSuccessAction({
               productApiResponse: productApiRes,
             });
-          }),
-          catchError(() => of({ type: LoadProductsFailureActionType }))
+          })
+          // catchError(() => of({ type: LoadProductsFailureActionType }))
         );
       })
     )

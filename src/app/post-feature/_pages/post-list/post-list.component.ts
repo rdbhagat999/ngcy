@@ -12,7 +12,7 @@ import { Observable } from "rxjs";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 import { Store } from "@ngrx/store";
-import { postFeatureKey } from "@app/state";
+import { selectPostsFeature } from "@app/state";
 import { loadPostsAction } from "@app/state/post/post.actions";
 
 @Component({
@@ -87,9 +87,7 @@ export class PostListComponent implements OnInit {
   private postService: PostService = inject(PostService);
   private authService: AuthService = inject(AuthService);
   public toastrService: ToastrService = inject(ToastrService);
-  private store: Store<{ [postFeatureKey]: IPost[] }> = inject(
-    Store<{ [postFeatureKey]: IPost[] }>
-  );
+  private store: Store = inject(Store);
 
   authorRole = ROLE.AUTHOR;
   adminRole = ROLE.ADMIN;
@@ -100,7 +98,7 @@ export class PostListComponent implements OnInit {
     keepAfterRouteChange: true,
   };
 
-  posts$!: Observable<IPost[]>;
+  posts$!: Observable<readonly IPost[]>;
   yourPosts$!: Observable<IPost[]>;
 
   constructor() {
@@ -109,7 +107,7 @@ export class PostListComponent implements OnInit {
 
   ngOnInit() {
     this.auth_user = this.authService.getAuthUser();
-    this.posts$ = this.store.select((state) => state[postFeatureKey]);
+    this.posts$ = this.store.select(selectPostsFeature);
     this.yourPosts$ = this.postService.getAllPostsByUserId(
       this.auth_user?.id || 0
     );

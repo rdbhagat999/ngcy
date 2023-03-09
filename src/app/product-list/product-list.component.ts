@@ -7,10 +7,8 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { productFeatureKey } from "@app/state";
+import { selectProductsFeature } from "@app/state";
 import { loadProductsAction } from "@app/state/product/product.actions";
-import { ProductEffects } from "@app/state/product/product.effects";
-import { ProductService } from "@app/_services/product.service";
 import { LifeCycleDirective } from "@app/_shared/_directives";
 import { IProductsAPIResponse } from "@app/_shared/_models";
 import { Store } from "@ngrx/store";
@@ -96,10 +94,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
   styles: [],
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
-  private productService: ProductService = inject(ProductService);
-  private store: Store<{ [productFeatureKey]: IProductsAPIResponse }> = inject(
-    Store<{ [productFeatureKey]: IProductsAPIResponse }>
-  );
+  private store: Store = inject(Store);
   private gridApi!: GridApi;
   public currentPage = 0;
   public paginationPageSize = 10;
@@ -147,13 +142,11 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.rowData$ = this.store
-      .select((state) => state[productFeatureKey])
-      .pipe(
-        tap((data) => {
-          this.onBtHide();
-        })
-      );
+    this.rowData$ = this.store.select(selectProductsFeature).pipe(
+      tap((_data) => {
+        this.onBtHide();
+      })
+    );
   }
 
   onGridReady(params: GridReadyEvent) {
@@ -230,15 +223,6 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   fetchProducts() {
     this.onBtShowLoading();
-
-    // this.rowData$ = this.productService
-    //   .getProducts(this.currentPage, this.paginationPageSize)
-    //   .pipe(
-    //     tap((data) => {
-    //       console.log(data);
-    //       this.onBtHide();
-    //     })
-    //   );
 
     this.store.dispatch(
       loadProductsAction({

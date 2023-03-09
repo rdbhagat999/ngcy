@@ -18,11 +18,11 @@ export class PostEffects {
       ofType(loadPostsAction),
       switchMap((action) => {
         console.log("action", action);
-        return this.postService.getPosts(action.limit || 10).pipe(
+        return this.postService.getPosts(action.limit).pipe(
           map((posts) => {
             return loadPostsSuccessAction({ posts });
-          }),
-          catchError(() => of({ type: loadPostsFailureActionType }))
+          })
+          // catchError(() => of({ type: loadPostsFailureActionType }))
         );
       })
     )
