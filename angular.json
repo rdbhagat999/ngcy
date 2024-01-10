@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngcy:build:production"
+              "buildTarget": "ngcy:build:production"
             },
             "development": {
-              "browserTarget": "ngcy:build:development"
+              "buildTarget": "ngcy:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +100,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngcy:build"
+            "buildTarget": "ngcy:build"
           }
         },
         "deploy": {
