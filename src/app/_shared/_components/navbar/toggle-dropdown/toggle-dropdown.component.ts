@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { IDummyAuthUser } from "@app/_shared/_models";
 import { Router, NavigationEnd, RouterModule } from "@angular/router";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -15,7 +15,7 @@ import { takeUntil, filter, tap } from "rxjs";
 @Component({
   selector: "app-toggle-dropdown",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   hostDirectives: [LifeCycleDirective],
   template: `
     <div *ngIf="auth_user">
@@ -30,7 +30,9 @@ import { takeUntil, filter, tap } from "rxjs";
         <span class="sr-only">Open user menu</span>
         <img
           class="h-8 w-8 rounded-full"
-          src="/assets/navbar_avatar.avif"
+          [ngSrc]="avatarURL"
+          width="32" 
+          height="32"
           alt="avatar" />
       </button>
     </div>
@@ -43,6 +45,11 @@ export class ToggleDropdownComponent implements OnInit {
   @Input() isDropdownOpen = false;
   @Input() auth_user!: IDummyAuthUser | null;
   @Output() toggleDropdown = new EventEmitter<boolean>();
+  avatarURL = ''
+
+  constructor() {
+    this.avatarURL = window.location.href.includes('localhost') ? "assets/navbar_avatar.avif" : "/ngcy/assets/navbar_avatar.avif"
+  }
 
   ngOnInit() {
     this.router.events
