@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
+      - run: npm install
         working-directory: ${{ env.BUILD_PATH }}
       # - run: npm run build --if-present
       - run: pwd
@@ -63,7 +63,7 @@ jobs:
           enablement: true
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: Build with Angular
