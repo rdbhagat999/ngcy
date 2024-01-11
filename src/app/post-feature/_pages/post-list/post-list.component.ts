@@ -45,10 +45,11 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
               <ng-container *ngIf="posts$ | async as posts">
-                <app-post-card
-                  [auth_user]="auth_user"
-                  *ngFor="let post of posts"
-                  [post]="post"></app-post-card>
+                @for (post of posts; track post.id) {
+                  <app-post-card
+                    [auth_user]="auth_user"
+                    [post]="post"></app-post-card>
+                }
               </ng-container>
             </ul>
           </div>
@@ -73,10 +74,11 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
               <ng-container *ngIf="yourPosts$ | async as yourPosts">
-                <app-post-card
-                  [auth_user]="auth_user"
-                  *ngFor="let yourPost of yourPosts"
-                  [post]="yourPost"></app-post-card>
+                  @for (yourPost of yourPosts; track yourPost.id) {
+                  <app-post-card
+                    [auth_user]="auth_user"
+                    [post]="yourPost"></app-post-card>
+                }
               </ng-container>
             </ul>
           </div>
