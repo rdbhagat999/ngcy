@@ -29,7 +29,6 @@ import { productFeatureKey } from "@app/state/product/product.state";
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom([BrowserAnimationsModule]),
-
     provideStore(),
     provideState(counterFeatureKey, counterReducer),
     provideState(productFeatureKey, productReducer),

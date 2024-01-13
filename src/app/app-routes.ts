@@ -47,6 +47,14 @@ export const APP_ROUTES: Route[] = [
       ),
   },
   {
+    path: "recipes",
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import("@app/recipes/recipes.component").then(
+        (cmp) => cmp.RecipieListComponent
+      ),
+  },
+  {
     path: "about",
     loadComponent: () =>
       import("@app/_pages").then((cmp) => cmp.AboutComponent),
