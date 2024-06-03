@@ -240,8 +240,8 @@ export class LoginComponent {
 
   initForm() {
     this.form = this.fb.group({
-      username: ["atuny0", [Validators.required]],
-      password: ["9uQFF1Lh", [Validators.required]],
+      username: ["noahh", [Validators.required]],
+      password: ["noahhpass", [Validators.required]],
     });
 
     this.initLoginRoleForm();

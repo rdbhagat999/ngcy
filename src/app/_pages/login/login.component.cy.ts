@@ -13,8 +13,8 @@ import { LoginComponent } from "./login.component";
 
 const API_URL = "https://dummyjson.com";
 const title = "Sign in to your account";
-const username = "atuny0";
-const email = "atuny0@sohu.com";
+const username = "noahhpass";
+const email = "noahhpass@sohu.com";
 const password = "9uQFF1Lh";
 const wrong_password = "12345";
 

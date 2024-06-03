@@ -12,7 +12,7 @@ import { mount } from "cypress/angular";
 import { RegisterComponent } from "./register.component";
 
 const title = "Sign up to your account";
-const username = "atuny0x";
+const username = "noahhx";
 const password = "9uQFF1Lh";
 
 describe("RegisterComponent", () => {
