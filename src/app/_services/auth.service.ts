@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   checkUsername(username: string): Observable<boolean> {
-    if (username === "kminchelle") {
+    if (username === "liamg") {
       return of(true);
     }
     return of(false);
