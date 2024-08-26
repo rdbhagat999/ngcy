@@ -1,8 +1,4 @@
-import {
-  HttpEvent,
-  HttpInterceptorFn,
-  HttpResponse,
-} from "@angular/common/http";
+import { HttpEvent, HttpInterceptorFn, HttpResponse } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { AuthService } from "@app/_services";
 import { map } from "rxjs";

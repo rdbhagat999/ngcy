@@ -25,6 +25,7 @@ import { PostEffects } from "@app/state/post/post.effects";
 import { counterFeatureKey } from "@app/state/counter/counter.selectors";
 import { postFeatureKey } from "@app/state/post/post.state";
 import { productFeatureKey } from "@app/state/product/product.state";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -34,7 +35,8 @@ bootstrapApplication(AppComponent, {
     provideState(productFeatureKey, productReducer),
     provideState(postFeatureKey, postReducer),
     provideEffects([ProductEffects, PostEffects]),
-
+    Location,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: BACKEND_API, useValue: "https://dummyjson.com" },
     { provide: ToastrService, useClass: ToastrService },
     { provide: AuthService, useClass: AuthService },
