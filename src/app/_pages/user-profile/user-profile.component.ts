@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { IDummyJsonUser } from "@app/_shared/_models";
@@ -8,7 +8,7 @@ import { Observable, switchMap } from "rxjs";
 @Component({
   selector: "app-user-profile",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   template: `
     <section
       class="ease-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200"
@@ -24,8 +24,10 @@ import { Observable, switchMap } from "rxjs";
                 <div
                   class="text-size-base ease-in-out h-32 w-32 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
                   <img
-                    [src]="profile?.image || '/assets/profile_user.jpg'"
+                    [ngSrc]="profile?.image || '/assets/profile_user.jpg'"
                     alt="profile_image"
+                    width="128" 
+                    height="128"
                     class="w-full shadow-sm rounded-xl" />
                 </div>
               </div>

@@ -138,6 +138,7 @@ export class NavbarComponent implements OnInit {
     { path: "/counter", label: "Counter" },
     { path: "/posts", label: "Posts" },
     { path: "/products", label: "Products" },
+    { path: "/recipes", label: "Recipes" },
     { path: "/about", label: "About" },
   ];
 

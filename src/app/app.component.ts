@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   OnInit,
+  VERSION
 } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "@app/_shared/_components";
@@ -27,6 +28,7 @@ import { AuthService } from "./_services";
         <!-- Replace with your content -->
         <div class="px-4 py-6 sm:px-0">
           <div class="rounded-lg border-4 border-dashed border-gray-200">
+            <p>Angular version: {{appVersion}}</p>
             <router-outlet></router-outlet>
           </div>
         </div>
@@ -38,6 +40,7 @@ import { AuthService } from "./_services";
 })
 export class AppComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
+  appVersion = VERSION.major;
 
   ngOnInit() {
     this.authService.setAuthUserFromStorage();

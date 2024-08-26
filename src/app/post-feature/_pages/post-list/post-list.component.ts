@@ -45,10 +45,17 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
               <ng-container *ngIf="posts$ | async as posts">
-                <app-post-card
-                  [auth_user]="auth_user"
-                  *ngFor="let post of posts"
-                  [post]="post"></app-post-card>
+                @for (post of posts; track post.id) {
+                  @defer (on viewport) {
+                    <app-post-card
+                      [auth_user]="auth_user"
+                      [post]="post"></app-post-card>
+                  } @placeholder {
+                    <p>Post list</p>
+                  } @loading (minimum 2s) {
+                    <p>Loading posts...</p>
+                  }
+                } 
               </ng-container>
             </ul>
           </div>
@@ -73,10 +80,17 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200">
               <ng-container *ngIf="yourPosts$ | async as yourPosts">
-                <app-post-card
-                  [auth_user]="auth_user"
-                  *ngFor="let yourPost of yourPosts"
-                  [post]="yourPost"></app-post-card>
+                  @for (yourPost of yourPosts; track yourPost.id) {
+                    @defer (on viewport) {
+                      <app-post-card
+                        [auth_user]="auth_user"
+                        [post]="yourPost"></app-post-card>
+                    } @placeholder {
+                      <p>Post list</p>
+                    } @loading (minimum 2s) {
+                      <p>Loading posts...</p>
+                    }
+                  } 
               </ng-container>
             </ul>
           </div>

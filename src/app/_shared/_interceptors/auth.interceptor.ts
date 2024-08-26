@@ -24,9 +24,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       map((response: HttpEvent<any>) => {
         if (response instanceof HttpResponse) {
           if (response?.ok) {
-            if (response.body.username === "kminchelle") {
+            if (response.body.username === "liamg") {
               response.body.role = ROLE.ADMIN;
-            } else if (response.body.username === "hbingley1") {
+            } else if (response.body.username === "miar") {
               response.body.role = ROLE.AUTHOR;
             } else {
               response.body.role = ROLE.USER;
