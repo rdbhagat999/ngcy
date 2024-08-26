@@ -26,14 +26,16 @@ import { takeUntil, filter, tap } from "rxjs";
         class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
         id="user-menu-button"
         aria-expanded="false"
-        aria-haspopup="true">
+        aria-haspopup="true"
+      >
         <span class="sr-only">Open user menu</span>
         <img
           class="h-8 w-8 rounded-full"
           [ngSrc]="avatarURL"
-          width="32" 
+          width="32"
           height="32"
-          alt="avatar" />
+          alt="avatar"
+        />
       </button>
     </div>
   `,
@@ -45,10 +47,12 @@ export class ToggleDropdownComponent implements OnInit {
   @Input() isDropdownOpen = false;
   @Input() auth_user!: IDummyAuthUser | null;
   @Output() toggleDropdown = new EventEmitter<boolean>();
-  avatarURL = ''
+  avatarURL = "";
 
   constructor() {
-    this.avatarURL = window.location.href.includes('localhost') ? "assets/navbar_avatar.avif" : "/ngcy/assets/navbar_avatar.avif"
+    this.avatarURL = window.location.href.includes("localhost")
+      ? "assets/navbar_avatar.avif"
+      : "/assets/navbar_avatar.avif";
   }
 
   ngOnInit() {
