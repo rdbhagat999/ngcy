@@ -8,7 +8,7 @@ import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 import { Store } from "@ngrx/store";
