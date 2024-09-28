@@ -1,6 +1,5 @@
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import { importProvidersFrom } from "@angular/core";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { provideNoopAnimations } from "@angular/platform-browser/animations";
 import { AuthService } from "@app/_services";
 import {
   errorInterceptor,
@@ -23,7 +22,7 @@ describe("LoginComponent", () => {
     mount(LoginComponent, {
       imports: [LoginComponent],
       providers: [
-        importProvidersFrom([NoopAnimationsModule]),
+        provideNoopAnimations(),
         { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(
@@ -41,7 +40,7 @@ describe("LoginComponent", () => {
     mount(LoginComponent, {
       imports: [LoginComponent],
       providers: [
-        importProvidersFrom([NoopAnimationsModule]),
+        provideNoopAnimations(),
         { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(
@@ -75,7 +74,7 @@ describe("LoginComponent", () => {
     mount(LoginComponent, {
       imports: [LoginComponent],
       providers: [
-        importProvidersFrom([NoopAnimationsModule]),
+        provideNoopAnimations(),
         { provide: BACKEND_API, useValue: "https://dummyjson.com" },
         { provide: AuthService, useClass: AuthService },
         provideHttpClient(

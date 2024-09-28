@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { provideRouter } from "@angular/router";
 import { APP_ROUTES } from "@app/app-routes";
 import { AuthService } from "@app/_services";
@@ -17,7 +17,7 @@ const title = "Profile Information";
 describe("UserProfileComponent", () => {
   beforeEach(() => {
     mount(UserProfileComponent, {
-      imports: [UserProfileComponent, HttpClientTestingModule],
+      imports: [UserProfileComponent, provideHttpClientTesting()],
       providers: [
         provideRouter([...APP_ROUTES]),
         { provide: BACKEND_API, useValue: "https://dummyjson.com" },

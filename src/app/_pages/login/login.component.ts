@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { CommonModule, NgClass, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
 import {
   FormBuilder,
@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { AuthService, GlobalErrorHandlerService } from "@app/_services";
+import { AuthService } from "@app/_services";
 import { Subscription } from "rxjs";
 import { ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
@@ -16,7 +16,14 @@ import { ToastrService } from "@app/toastr";
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    NgForOf,
+    AsyncPipe,
+    NgClass,
+    NgIf,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   template: `
     <section class="bg-gray-50 dark:bg-gray-900">

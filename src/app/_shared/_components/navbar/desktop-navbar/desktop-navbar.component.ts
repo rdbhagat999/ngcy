@@ -1,10 +1,4 @@
-import {
-  AsyncPipe,
-  CommonModule,
-  NgClass,
-  NgForOf,
-  NgIf,
-} from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";

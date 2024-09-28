@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import {
@@ -12,12 +12,13 @@ import { selectCounter } from "@app/state/counter/counter.selectors";
 @Component({
   selector: "app-counter",
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
   template: `
     <div class="flex flex-col justify-center items-center space-y-4">
       <button
         class="submit inline-flex justify-center items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150"
-        (click)="increment()">
+        (click)="increment()"
+      >
         Increment
       </button>
 
@@ -25,13 +26,15 @@ import { selectCounter } from "@app/state/counter/counter.selectors";
 
       <button
         class="submit inline-flex justify-center items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150"
-        (click)="decrement()">
+        (click)="decrement()"
+      >
         Decrement
       </button>
 
       <button
         class="submit inline-flex justify-center items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150"
-        (click)="reset()">
+        (click)="reset()"
+      >
         Reset Counter
       </button>
     </div>

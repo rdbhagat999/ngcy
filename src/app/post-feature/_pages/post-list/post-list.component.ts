@@ -4,13 +4,7 @@ import {
   inject,
   OnInit,
 } from "@angular/core";
-import {
-  AsyncPipe,
-  CommonModule,
-  NgClass,
-  NgForOf,
-  NgIf,
-} from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
