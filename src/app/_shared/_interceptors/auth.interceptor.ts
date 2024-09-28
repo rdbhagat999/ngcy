@@ -1,4 +1,8 @@
-import { HttpEvent, HttpInterceptorFn, HttpResponse } from "@angular/common/http";
+import {
+  HttpEvent,
+  HttpInterceptorFn,
+  HttpResponse,
+} from "@angular/common/http";
 import { inject } from "@angular/core";
 import { AuthService } from "@app/_services";
 import { map } from "rxjs";
@@ -11,7 +15,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const cloneReq = req.clone({
     setHeaders: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${authService.getAuthUser()?.token}`,
+      Authorization: `Bearer ${authService.getAuthUser()?.accessToken}`,
     },
   });
 

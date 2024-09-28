@@ -4,7 +4,7 @@ export interface IDummyAuthUser {
   email: string;
   firstName: string;
   id: number;
-  token: string;
+  accessToken: string;
   username: string;
   role: ROLE;
 }
