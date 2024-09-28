@@ -5,7 +5,7 @@ import {
   transition,
   animate,
 } from "@angular/animations";
-import { CommonModule } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
@@ -13,7 +13,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
 @Component({
   selector: "app-mobile-navbar",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger("openCloseMobileMenu", [
@@ -41,7 +41,8 @@ import { IDummyAuthUser } from "@app/_shared/_models";
       [@openCloseMobileMenu]="openCloseMobileMenuTrigger"
       [ngClass]="{ block: isMobileMenuOpen, hidden: !isMobileMenuOpen }"
       class="sm:hidden"
-      id="mobile-menu">
+      id="mobile-menu"
+    >
       <div class="space-y-1 px-2 pt-2 pb-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <a

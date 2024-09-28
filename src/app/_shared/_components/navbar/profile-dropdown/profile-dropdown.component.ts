@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from "@angular/core";
-import { CommonModule, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import {
   trigger,
   state,
@@ -21,7 +21,7 @@ import { LifeCycleDirective } from "@app/_shared/_directives";
 @Component({
   selector: "app-profile-dropdown",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [LifeCycleDirective],
   animations: [
@@ -51,7 +51,8 @@ import { LifeCycleDirective } from "@app/_shared/_directives";
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="user-menu-button"
-    tabindex="-1">
+    tabindex="-1"
+  >
     <!-- Active: "bg-gray-100", Not Active: "" -->
     <a
       data-cy="profile-link"

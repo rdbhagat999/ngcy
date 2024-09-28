@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { ICellRendererAngularComp } from "ag-grid-angular";
 import { ICellRendererParams } from "ag-grid-community";
 import { IProduct } from "@app/_shared/_models";
@@ -11,13 +11,14 @@ export type IMyCustomCellRendererParams = {
 @Component({
   selector: "app-image-cell",
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
   template: `
     <div class="realtive flex flex-col justify-start items-center">
       <img
         class="max-w-full object-contain"
         [src]="product.thumbnail"
-        [attr.alt]="product.title" />
+        [attr.alt]="product.title"
+      />
     </div>
   `,
   styles: [],

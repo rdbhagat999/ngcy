@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -26,20 +26,29 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
   selector: "app-product-list",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, AgGridModule, ImageCellComponent],
+  imports: [
+    NgForOf,
+    AsyncPipe,
+    NgClass,
+    NgIf,
+    AgGridModule,
+    ImageCellComponent,
+  ],
   hostDirectives: [LifeCycleDirective],
   providers: [],
   template: `
     <div class="space-x-4">
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="onBtnExport()">
+        (click)="onBtnExport()"
+      >
         Export CSV
       </button>
 
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="clearSelection()">
+        (click)="clearSelection()"
+      >
         Clear Selection
       </button>
     </div>
@@ -59,18 +68,21 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
       [suppressScrollOnNewData]="true"
       (gridReady)="onGridReady($event)"
       (cellClicked)="onCellClicked($event)"
-      (paginationChanged)="onPaginationChanged($event)"></ag-grid-angular>
+      (paginationChanged)="onPaginationChanged($event)"
+    ></ag-grid-angular>
 
     <div class="flex justify-center items-center space-x-4">
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="onBtnFirst()">
+        (click)="onBtnFirst()"
+      >
         First
       </button>
 
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="onBtnPrevious()">
+        (click)="onBtnPrevious()"
+      >
         Previous
       </button>
 
@@ -80,13 +92,15 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
 
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="onBtnNext()">
+        (click)="onBtnNext()"
+      >
         Next
       </button>
 
       <button
         class="text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-700 px-4 py-1 my-2 rounded"
-        (click)="onBtnLast()">
+        (click)="onBtnLast()"
+      >
         Last
       </button>
     </div>
@@ -210,15 +224,15 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   onBtShowLoading() {
-    this.agGrid.api!.showLoadingOverlay();
+    this.agGrid.api!.setGridOption("loading", true);
   }
 
   onBtShowNoRows() {
-    this.agGrid.api!.showNoRowsOverlay();
+    this.agGrid.api!.setGridOption("loading", false);
   }
 
   onBtHide() {
-    this.agGrid.api!.hideOverlay();
+    this.agGrid.api!.setGridOption("loading", false);
   }
 
   fetchProducts() {

@@ -4,8 +4,8 @@ import {
   inject,
   OnInit,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { NavigationEnd, Router } from "@angular/router";
 import { filter, Observable, takeUntil, tap } from "rxjs";
 import { LifeCycleDirective } from "@app/_shared/_directives";
 import { ToggleNavbarComponent } from "./toggle-navbar/toggle-navbar.component";
@@ -29,8 +29,10 @@ To: "transform opacity-0 scale-95"
   selector: "app-navbar",
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule,
+    NgForOf,
+    AsyncPipe,
+    NgClass,
+    NgIf,
     ToggleNavbarComponent,
     MobileNavbarComponent,
     DesktopNavbarComponent,
@@ -46,28 +48,34 @@ To: "transform opacity-0 scale-95"
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <app-toggle-navbar
               (isMobileMenuOpenEvent)="toggleMobileMenu($event)"
-              [isMobileMenuOpen]="isMobileMenuOpen"></app-toggle-navbar>
+              [isMobileMenuOpen]="isMobileMenuOpen"
+            ></app-toggle-navbar>
           </div>
           <div
-            class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+          >
             <div class="flex flex-shrink-0 items-center">
               <img
                 class="block h-8 w-auto lg:hidden"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company" />
+                alt="Your Company"
+              />
               <img
                 class="hidden h-8 w-auto lg:block"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company" />
+                alt="Your Company"
+              />
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <app-desktop-navbar
                 [navLinks]="navLinks"
-                [auth_user]="auth_user$ | async"></app-desktop-navbar>
+                [auth_user]="auth_user$ | async"
+              ></app-desktop-navbar>
             </div>
           </div>
           <div
-            class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          >
             <!-- <button
               type="button"
               class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -92,9 +100,8 @@ To: "transform opacity-0 scale-95"
                 <app-toggle-dropdown
                   [auth_user]="auth_user$ | async"
                   [isDropdownOpen]="isDropdownOpen"
-                  (toggleDropdown)="
-                    toggleDropdown($event)
-                  "></app-toggle-dropdown>
+                  (toggleDropdown)="toggleDropdown($event)"
+                ></app-toggle-dropdown>
               </div>
 
               <!--
@@ -110,7 +117,8 @@ To: "transform opacity-0 scale-95"
               <app-profile-dropdown
                 (logoutEvent)="logoutEvent($event)"
                 [isDropdownOpen]="isDropdownOpen"
-                [auth_user]="auth_user$ | async"></app-profile-dropdown>
+                [auth_user]="auth_user$ | async"
+              ></app-profile-dropdown>
             </div>
           </div>
         </div>
@@ -119,7 +127,8 @@ To: "transform opacity-0 scale-95"
       <app-mobile-navbar
         [isMobileMenuOpen]="isMobileMenuOpen"
         [navLinks]="navLinks"
-        [auth_user]="auth_user$ | async"></app-mobile-navbar>
+        [auth_user]="auth_user$ | async"
+      ></app-mobile-navbar>
     </nav>
   `,
   styles: [],

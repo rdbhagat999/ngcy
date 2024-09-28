@@ -4,7 +4,13 @@ import {
   inject,
   OnInit,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import {
+  AsyncPipe,
+  CommonModule,
+  NgClass,
+  NgForOf,
+  NgIf,
+} from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
@@ -21,18 +27,20 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
 @Component({
   selector: "app-post-list",
   standalone: true,
-  imports: [CommonModule, RouterModule, PostCardComponent],
+  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule, PostCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
       [class.md:grid-cols-2]="auth_user?.role === authorRole"
-      class="post-list grid grid-cols-1 gap-4">
+      class="post-list grid grid-cols-1 gap-4"
+    >
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
             <h3
               data-cy="post-list"
-              class="text-lg font-medium leading-6 text-gray-900">
+              class="text-lg font-medium leading-6 text-gray-900"
+            >
               Post list
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -43,19 +51,19 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
           <div class="bg-white px-4 py-5 sm:grid sm:px-6">
             <ul
               role="list"
-              class="divide-y divide-gray-200 rounded-md border border-gray-200">
+              class="divide-y divide-gray-200 rounded-md border border-gray-200"
+            >
               <ng-container *ngIf="posts$ | async as posts">
-                @for (post of posts; track post.id) {
-                  @defer (on viewport) {
-                    <app-post-card
-                      [auth_user]="auth_user"
-                      [post]="post"></app-post-card>
-                  } @placeholder {
-                    <p>Post list</p>
-                  } @loading (minimum 2s) {
-                    <p>Loading posts...</p>
-                  }
-                } 
+                @for (post of posts; track post.id) { @defer (on viewport) {
+                <app-post-card
+                  [auth_user]="auth_user"
+                  [post]="post"
+                ></app-post-card>
+                } @placeholder {
+                <p>Post list</p>
+                } @loading (minimum 2s) {
+                <p>Loading posts...</p>
+                } }
               </ng-container>
             </ul>
           </div>
@@ -67,7 +75,8 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
           <div class="px-4 py-5 sm:px-6">
             <h3
               data-cy="your-post-list"
-              class="text-lg font-medium leading-6 text-gray-900">
+              class="text-lg font-medium leading-6 text-gray-900"
+            >
               Your post list
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -78,19 +87,20 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
           <div class="bg-white px-4 py-5 sm:grid sm:px-6">
             <ul
               role="list"
-              class="divide-y divide-gray-200 rounded-md border border-gray-200">
+              class="divide-y divide-gray-200 rounded-md border border-gray-200"
+            >
               <ng-container *ngIf="yourPosts$ | async as yourPosts">
-                  @for (yourPost of yourPosts; track yourPost.id) {
-                    @defer (on viewport) {
-                      <app-post-card
-                        [auth_user]="auth_user"
-                        [post]="yourPost"></app-post-card>
-                    } @placeholder {
-                      <p>Post list</p>
-                    } @loading (minimum 2s) {
-                      <p>Loading posts...</p>
-                    }
-                  } 
+                @for (yourPost of yourPosts; track yourPost.id) { @defer (on
+                viewport) {
+                <app-post-card
+                  [auth_user]="auth_user"
+                  [post]="yourPost"
+                ></app-post-card>
+                } @placeholder {
+                <p>Post list</p>
+                } @loading (minimum 2s) {
+                <p>Loading posts...</p>
+                } }
               </ng-container>
             </ul>
           </div>
