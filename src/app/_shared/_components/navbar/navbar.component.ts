@@ -2,11 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit,
+  Signal,
 } from "@angular/core";
 import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { NavigationEnd, Router } from "@angular/router";
-import { filter, Observable, takeUntil, tap } from "rxjs";
+import { filter, Observable, Subscription, takeUntil, tap } from "rxjs";
 import { LifeCycleDirective } from "@app/_shared/_directives";
 import { ToggleNavbarComponent } from "./toggle-navbar/toggle-navbar.component";
 import { MobileNavbarComponent } from "./mobile-navbar/mobile-navbar.component";
@@ -15,6 +17,7 @@ import { ProfileDropdownComponent } from "./profile-dropdown/profile-dropdown.co
 import { ToggleDropdownComponent } from "./toggle-dropdown/toggle-dropdown.component";
 import { AuthService } from "@app/_services";
 import { IDummyAuthUser } from "@app/_shared/_models";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 /*
 Entering: "transition ease-out duration-100"
@@ -29,10 +32,6 @@ To: "transform opacity-0 scale-95"
   selector: "app-navbar",
   standalone: true,
   imports: [
-    NgForOf,
-    AsyncPipe,
-    NgClass,
-    NgIf,
     ToggleNavbarComponent,
     MobileNavbarComponent,
     DesktopNavbarComponent,
@@ -57,19 +56,19 @@ To: "transform opacity-0 scale-95"
             <div class="flex flex-shrink-0 items-center">
               <img
                 class="block h-8 w-auto lg:hidden"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                src="/assets/tailwind_logo.svg"
                 alt="Your Company"
               />
               <img
                 class="hidden h-8 w-auto lg:block"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                src="/assets/tailwind_logo.svg"
                 alt="Your Company"
               />
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <app-desktop-navbar
                 [navLinks]="navLinks"
-                [auth_user]="auth_user$ | async"
+                [auth_user]="authUserSignal()"
               ></app-desktop-navbar>
             </div>
           </div>
@@ -98,7 +97,7 @@ To: "transform opacity-0 scale-95"
             <div class="relative ml-3">
               <div>
                 <app-toggle-dropdown
-                  [auth_user]="auth_user$ | async"
+                  [auth_user]="authUserSignal()"
                   [isDropdownOpen]="isDropdownOpen"
                   (toggleDropdown)="toggleDropdown($event)"
                 ></app-toggle-dropdown>
@@ -117,7 +116,7 @@ To: "transform opacity-0 scale-95"
               <app-profile-dropdown
                 (logoutEvent)="logoutEvent($event)"
                 [isDropdownOpen]="isDropdownOpen"
-                [auth_user]="auth_user$ | async"
+                [auth_user]="authUserSignal()"
               ></app-profile-dropdown>
             </div>
           </div>
@@ -127,44 +126,50 @@ To: "transform opacity-0 scale-95"
       <app-mobile-navbar
         [isMobileMenuOpen]="isMobileMenuOpen"
         [navLinks]="navLinks"
-        [auth_user]="auth_user$ | async"
+        [auth_user]="authUserSignal()"
       ></app-mobile-navbar>
     </nav>
   `,
   styles: [],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   private router: Router = inject(Router);
   private lifeCycleDirective = inject(LifeCycleDirective);
   private authService = inject(AuthService);
   isMobileMenuOpen = false;
   isDropdownOpen = false;
 
-  auth_user$!: Observable<IDummyAuthUser | null>;
-
   navLinks: any = [
     { path: "/", label: "Home" },
     { path: "/counter", label: "Counter" },
     { path: "/posts", label: "Posts" },
-    { path: "/products", label: "Products" },
+    // { path: "/products", label: "Products" },
     { path: "/recipes", label: "Recipes" },
     { path: "/about", label: "About" },
   ];
 
-  ngOnInit() {
-    this.auth_user$ = this.authService.auth_user$;
+  authUserSignal: Signal<IDummyAuthUser | null>;
+  sub$: Subscription[] = [];
 
-    this.router.events
-      .pipe(
-        takeUntil(this.lifeCycleDirective.destroy$),
-        filter((event) => event instanceof NavigationEnd),
-        tap(() => {
-          this.isMobileMenuOpen = false;
-          this.isDropdownOpen = false;
-          return;
-        })
-      )
-      .subscribe();
+  constructor() {
+    const auth_user$ = this.authService.auth_user$;
+    this.authUserSignal = toSignal(auth_user$, { initialValue: null });
+  }
+
+  ngOnInit() {
+    this.sub$.push(
+      this.router.events
+        .pipe(
+          takeUntil(this.lifeCycleDirective.destroy$),
+          filter((event) => event instanceof NavigationEnd),
+          tap(() => {
+            this.isMobileMenuOpen = false;
+            this.isDropdownOpen = false;
+            return;
+          })
+        )
+        .subscribe()
+    );
   }
 
   toggleMobileMenu(event: boolean) {
@@ -178,5 +183,11 @@ export class NavbarComponent implements OnInit {
   logoutEvent(event: boolean) {
     this.isDropdownOpen = event;
     this.authService.logoutFromDummyJson();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub$) {
+      this.sub$?.forEach((s) => s?.unsubscribe());
+    }
   }
 }

@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 
 @Component({
   selector: "app-header",
   standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header class="bg-white shadow">

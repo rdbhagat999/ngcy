@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
   Signal,
 } from "@angular/core";
 import { RouterModule } from "@angular/router";
@@ -25,7 +26,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
-      [class.md:grid-cols-2]="auth_user?.role === authorRole"
+      [class.md:grid-cols-2]="auth_user()?.role === authorRole"
       class="post-list grid grid-cols-1 gap-4"
     >
       <article>
@@ -50,7 +51,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
               @if (postListSignal().length) { @for (post of postListSignal();
               track post.id) { @defer (on viewport) {
               <app-post-card
-                [auth_user]="auth_user"
+                [auth_user]="auth_user()"
                 [post]="post"
               ></app-post-card>
               } @placeholder {
@@ -63,7 +64,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
         </div>
       </article>
 
-      @if (auth_user?.role === authorRole) {
+      @if (auth_user()?.role === authorRole) {
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
@@ -86,7 +87,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
               @if (yourPostListSignal().length) { @for (yourPost of
               yourPostListSignal(); track yourPost.id) { @defer (on viewport) {
               <app-post-card
-                [auth_user]="auth_user"
+                [auth_user]="auth_user()"
                 [post]="yourPost"
               ></app-post-card>
               } @placeholder {
@@ -108,23 +109,23 @@ export class PostListComponent implements OnInit {
   public toastrService: ToastrService = inject(ToastrService);
   private store: Store = inject(Store);
 
+  auth_user = signal<IDummyAuthUser | null>(null);
+  postListSignal: Signal<IPost[]>;
+  yourPostListSignal: Signal<IPost[]>;
+
   authorRole = ROLE.AUTHOR;
   adminRole = ROLE.ADMIN;
-  auth_user!: IDummyAuthUser | null;
 
   options = {
     autoClose: true,
     keepAfterRouteChange: true,
   };
 
-  postListSignal: Signal<IPost[]>;
-  yourPostListSignal: Signal<IPost[]>;
-
   constructor() {
-    this.auth_user = this.authService.getAuthUser();
+    this.auth_user.set(this.authService.getAuthUser());
     this.store.dispatch(loadPostsAction({ page: 0, limit: 10 }));
     this.store.dispatch(
-      loadPostsByUserIdAction({ userId: this.auth_user?.id || 0 })
+      loadPostsByUserIdAction({ userId: this.auth_user()?.id || 0 })
     );
 
     const posts$ = this.store.select(selectPosts);

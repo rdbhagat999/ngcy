@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  Input,
+} from "@angular/core";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { RouterModule } from "@angular/router";
 import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
@@ -26,26 +31,27 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
         <span
           data-cy="post-title"
           class="ml-2 w-0 flex-1 truncate"
-          [appTooltip]="post.title"
-          >{{ post.title }}</span
+          [appTooltip]="post().title"
+          >{{ post().title }}</span
         >
       </div>
       <div class="ml-4 flex-shrink-0 space-x-4">
         <a
           appHighlight
-          [routerLink]="['/posts', post.id]"
+          [routerLink]="['/posts', post().id]"
           data-cy="view-post-link"
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >View</a
         >
-        @if (auth_user?.role == authorRole && auth_user?.id === post.userId) {
+        @if (auth_user()?.role == authorRole && auth_user()?.id ===
+        post().userId) {
         <a
           data-cy="edit-post-link"
           class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Edit</a
         >
-        } @if (auth_user?.role == adminRole || (auth_user?.role == authorRole &&
-        auth_user?.id === post.userId)) {<a
+        } @if (auth_user()?.role == adminRole || (auth_user()?.role ==
+        authorRole && auth_user()?.id === post().userId)) {<a
           data-cy="delete-post-link"
           class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Delete</a
@@ -59,6 +65,7 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
 export class PostCardComponent {
   adminRole: ROLE = ROLE.ADMIN;
   authorRole: ROLE = ROLE.AUTHOR;
-  @Input() post!: IPost;
-  @Input() auth_user!: IDummyAuthUser | null;
+
+  post = input.required<IPost>();
+  auth_user = input.required<IDummyAuthUser | null>();
 }

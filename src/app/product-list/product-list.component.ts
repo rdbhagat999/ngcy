@@ -109,11 +109,11 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   private store: Store = inject(Store);
+  private lifeCycleDirective = inject(LifeCycleDirective);
   private gridApi!: GridApi;
+  rowData$!: Observable<IProductAPIResponse>;
   public currentPage = 0;
   public paginationPageSize = 10;
-  rowData$!: Observable<IProductAPIResponse>;
-  private lifeCycleDirective = inject(LifeCycleDirective);
 
   // Each Column Definition results in one Column.
   public columnDefs: ColDef[] = [
@@ -167,7 +167,6 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     this.agGrid.api!.setGridOption("loading", true);
     this.gridApi = params.api;
     this.currentPage = this.gridApi.paginationGetCurrentPage();
-    // this.fetchProducts();
   }
 
   onCellClicked(e: CellClickedEvent): void {
@@ -201,7 +200,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       map((data) => data?.total)
     );
 
-    const sub$ = total$.subscribe((total) => {
+    const sub$ = total$.subscribe((total = 0) => {
       this.currentPage = total / this.paginationPageSize - 1;
       this.fetchProducts();
     });
