@@ -1,22 +1,13 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { RouterModule } from "@angular/router";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
 
 @Component({
   selector: "app-post-card",
   standalone: true,
-  imports: [
-    RouterModule,
-    NgForOf,
-    AsyncPipe,
-    NgClass,
-    NgIf,
-    HighlightDirective,
-    TooltipDirective,
-  ],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterModule, HighlightDirective, TooltipDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
       <div class="flex w-0 flex-1 items-center">
@@ -47,21 +38,19 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
           class="font-medium text-indigo-600 hover:text-indigo-500"
           >View</a
         >
+        @if (auth_user?.role == authorRole && auth_user?.id === post.userId) {
         <a
-          *ngIf="auth_user?.role == authorRole && auth_user?.id === post.userId"
           data-cy="edit-post-link"
           class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Edit</a
         >
-        <a
-          *ngIf="
-            auth_user?.role == adminRole ||
-            (auth_user?.role == authorRole && auth_user?.id === post.userId)
-          "
+        } @if (auth_user?.role == adminRole || (auth_user?.role == authorRole &&
+        auth_user?.id === post.userId)) {<a
           data-cy="delete-post-link"
           class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
           >Delete</a
         >
+        }
       </div>
     </li>
   `,

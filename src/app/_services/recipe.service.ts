@@ -13,40 +13,55 @@ export class RecipeService {
 
   constructor() {}
 
-  getRecipes(page: number = 0, limit: number = 5): Signal<IRecipeAPIResponse> {
+  getRecipes(
+    page: number = 0,
+    limit: number = 5
+  ): Signal<IRecipeAPIResponse | null> {
     const skip = page * limit;
 
     console.log(page, skip, limit);
 
-    return toSignal(this._http.get<IRecipeAPIResponse>(
+    return toSignal(
+      this._http.get<IRecipeAPIResponse>(
         `${this._backend_url}/auth/recipes?skip=${skip}&limit=${limit}`,
         {
           reportProgress: false,
         }
-      ), {initialValue: {} as IRecipeAPIResponse});
+      ),
+      { initialValue: null }
+    );
   }
 
   getAllRecipesByTag(): Signal<IRecipeAPIResponse> {
-    return toSignal(this._http.get<IRecipeAPIResponse>(
-      `${this._backend_url}/auth/recipes/tags`,
-      {
-        reportProgress: false,
-      }
-    ), {initialValue: {} as IRecipeAPIResponse});
+    return toSignal(
+      this._http.get<IRecipeAPIResponse>(
+        `${this._backend_url}/auth/recipes/tags`,
+        {
+          reportProgress: false,
+        }
+      ),
+      { initialValue: {} as IRecipeAPIResponse }
+    );
   }
 
   getAllRecipesByMealType(type: string): Signal<IRecipeAPIResponse> {
-    return toSignal(this._http.get<IRecipeAPIResponse>(
-      `${this._backend_url}/auth/recipes/meal-type/${type}`,
-      {
-        reportProgress: false,
-      }
-    ), {initialValue: {} as IRecipeAPIResponse});
+    return toSignal(
+      this._http.get<IRecipeAPIResponse>(
+        `${this._backend_url}/auth/recipes/meal-type/${type}`,
+        {
+          reportProgress: false,
+        }
+      ),
+      { initialValue: {} as IRecipeAPIResponse }
+    );
   }
 
   getRecipesByTag(tag: string): Signal<IRecipe> {
-    return toSignal(this._http.get<IRecipe>(`${this._backend_url}/auth/recipes/tag/${tag}`, {
-      reportProgress: false,
-    }), {initialValue: {} as IRecipe});
+    return toSignal(
+      this._http.get<IRecipe>(`${this._backend_url}/auth/recipes/tag/${tag}`, {
+        reportProgress: false,
+      }),
+      { initialValue: {} as IRecipe }
+    );
   }
 }

@@ -1,18 +1,19 @@
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   OnInit,
+  Signal,
 } from "@angular/core";
 
 import { RecipeService } from "@app/_services/recipe.service";
+import { IRecipeAPIResponse } from "@app/_shared/_models";
 
 @Component({
   selector: "app-recipe-list",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [],
   hostDirectives: [],
   providers: [],
   template: `
@@ -36,24 +37,23 @@ import { RecipeService } from "@app/_services/recipe.service";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200"
             >
-              <ng-container *ngIf="recipeListSignal()?.recipes?.length">
-                @for (recipe of recipeListSignal().recipes; track recipe.id) {
-                @defer (on viewport) {
-                <li
-                  class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
-                >
-                  {{ recipe?.name }}
-                </li>
-                } @placeholder {
-                <p>Recipe list</p>
-                } @loading (minimum 2s) {
-                <li
-                  class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
-                >
-                  Loading recipes...
-                </li>
-                } }
-              </ng-container>
+              @defer (when (recipeListSignal()?.recipes)?.length) { @for (recipe
+              of recipeListSignal()?.recipes; track recipe.id) { @defer (on
+              viewport) {
+              <li
+                class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+              >
+                {{ recipe?.name }}
+              </li>
+              } @placeholder (minimum 2s) {
+              <p>Recipe list</p>
+              } @loading (minimum 2s) {
+              <li
+                class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+              >
+                Loading recipes...
+              </li>
+              } } }
             </ul>
           </div>
         </div>
@@ -65,9 +65,11 @@ import { RecipeService } from "@app/_services/recipe.service";
 export class RecipieListComponent implements OnInit {
   private recipeService = inject(RecipeService);
 
-  recipeListSignal = this.recipeService.getRecipes();
+  recipeListSignal: Signal<IRecipeAPIResponse | null>;
 
-  constructor() {}
+  constructor() {
+    this.recipeListSignal = this.recipeService.getRecipes();
+  }
 
   ngOnInit() {}
 }

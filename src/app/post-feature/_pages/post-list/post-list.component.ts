@@ -3,12 +3,11 @@ import {
   Component,
   inject,
   OnInit,
+  Signal,
 } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
-import { Observable } from "rxjs/";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
 import { ToastrService } from "@app/toastr";
 import { Store } from "@ngrx/store";
@@ -17,11 +16,12 @@ import {
   loadPostsByUserIdAction,
 } from "@app/state/post/post.actions";
 import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-post-list",
   standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule, PostCardComponent],
+  imports: [RouterModule, PostCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
@@ -47,24 +47,24 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200"
             >
-              <ng-container *ngIf="posts$ | async as posts">
-                @for (post of posts; track post.id) { @defer (on viewport) {
-                <app-post-card
-                  [auth_user]="auth_user"
-                  [post]="post"
-                ></app-post-card>
-                } @placeholder {
-                <p>Post list</p>
-                } @loading (minimum 2s) {
-                <p>Loading posts...</p>
-                } }
-              </ng-container>
+              @if (postListSignal().length) { @for (post of postListSignal();
+              track post.id) { @defer (on viewport) {
+              <app-post-card
+                [auth_user]="auth_user"
+                [post]="post"
+              ></app-post-card>
+              } @placeholder {
+              <p>Post list</p>
+              } @loading (minimum 2s) {
+              <p>Loading posts...</p>
+              } } }
             </ul>
           </div>
         </div>
       </article>
 
-      <article *ngIf="auth_user?.role === authorRole">
+      @if (auth_user?.role === authorRole) {
+      <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
             <h3
@@ -83,23 +83,22 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
               role="list"
               class="divide-y divide-gray-200 rounded-md border border-gray-200"
             >
-              <ng-container *ngIf="yourPosts$ | async as yourPosts">
-                @for (yourPost of yourPosts; track yourPost.id) { @defer (on
-                viewport) {
-                <app-post-card
-                  [auth_user]="auth_user"
-                  [post]="yourPost"
-                ></app-post-card>
-                } @placeholder {
-                <p>Post list</p>
-                } @loading (minimum 2s) {
-                <p>Loading posts...</p>
-                } }
-              </ng-container>
+              @if (yourPostListSignal().length) { @for (yourPost of
+              yourPostListSignal(); track yourPost.id) { @defer (on viewport) {
+              <app-post-card
+                [auth_user]="auth_user"
+                [post]="yourPost"
+              ></app-post-card>
+              } @placeholder {
+              <p>Post list</p>
+              } @loading (minimum 2s) {
+              <p>Loading posts...</p>
+              } } }
             </ul>
           </div>
         </div>
       </article>
+      }
     </section>
   `,
   styles: [],
@@ -118,8 +117,8 @@ export class PostListComponent implements OnInit {
     keepAfterRouteChange: true,
   };
 
-  posts$!: Observable<readonly IPost[]>;
-  yourPosts$!: Observable<readonly IPost[]>;
+  postListSignal: Signal<IPost[]>;
+  yourPostListSignal: Signal<IPost[]>;
 
   constructor() {
     this.auth_user = this.authService.getAuthUser();
@@ -127,14 +126,20 @@ export class PostListComponent implements OnInit {
     this.store.dispatch(
       loadPostsByUserIdAction({ userId: this.auth_user?.id || 0 })
     );
+
+    const posts$ = this.store.select(selectPosts);
+    const yourPosts$ = this.store.select(selectYourPosts);
+
+    this.postListSignal = toSignal(posts$, { initialValue: [] as IPost[] });
+
+    this.yourPostListSignal = toSignal(yourPosts$, {
+      initialValue: [] as IPost[],
+    });
   }
 
-  ngOnInit() {
-    this.posts$ = this.store.select(selectPosts);
-    this.yourPosts$ = this.store.select(selectYourPosts);
-  }
+  ngOnInit() {}
 
-  trackById(index: number, item: IPost) {
-    return item.id;
-  }
+  // trackById(index: number, item: IPost) {
+  //   return item.id;
+  // }
 }

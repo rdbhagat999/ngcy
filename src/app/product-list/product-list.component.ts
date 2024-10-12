@@ -164,6 +164,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   onGridReady(params: GridReadyEvent) {
+    this.agGrid.api!.setGridOption("loading", true);
     this.gridApi = params.api;
     this.currentPage = this.gridApi.paginationGetCurrentPage();
     // this.fetchProducts();
