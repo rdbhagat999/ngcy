@@ -24,16 +24,15 @@ import { toSignal } from "@angular/core/rxjs-interop";
   template: `
     <section class="post-list">
       <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-        @defer (when postSignal()) {
         <div class="px-4 pt-5 sm:px-6">
           <h3
             data-cy="post-title"
             class="text-lg font-medium leading-6 text-gray-900"
           >
-            {{ postSignal()?.title }}
+            {{ postSignal()?.title || "Loading" }}
           </h3>
           <p data-cy="post-body" class="mt-1 max-w-2xl text-sm text-gray-500">
-            {{ postSignal()?.body }}
+            {{ postSignal()?.body || "Loading" }}
           </p>
         </div>
 
@@ -45,7 +44,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
             role="list"
             class="divide-y divide-gray-200 rounded-md border border-gray-200"
           >
-            @for (tag of postSignal()?.tags; track tag) {
+            @defer { @for (tag of postSignal()?.tags; track tag) {
             <li
               class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
             >
@@ -65,31 +64,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
                 <span class="ml-2 w-0 flex-1 truncate">{{ tag }}</span>
               </div>
             </li>
-            }
-          </ul>
-        </div>
-        } @placeholder (minimum 2s) {
-        <div class="px-4 pt-5 sm:px-6">
-          <h3
-            data-cy="post-title"
-            class="text-lg font-medium leading-6 text-gray-900"
-          >
-            Loading...
-          </h3>
-          <p data-cy="post-body" class="mt-1 max-w-2xl text-sm text-gray-500">
-            Loading...
-          </p>
-        </div>
-
-        <div class="bg-white px-4 py-5 sm:grid sm:px-6">
-          <h3 class="text-base mb-2 font-medium leading-6 text-gray-900">
-            Tags
-          </h3>
-          <ul
-            role="list"
-            class="divide-y divide-gray-200 rounded-md border border-gray-200"
-          >
-            @for (tag of [0,1]; track tag) {
+            } } @placeholder (minimum 3s) { @for (tag of [0,1]; track tag) {
             <li
               class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
             >
@@ -109,10 +84,9 @@ import { toSignal } from "@angular/core/rxjs-interop";
                 <span class="ml-2 w-0 flex-1 truncate">Loading...</span>
               </div>
             </li>
-            }
+            } }
           </ul>
         </div>
-        }
       </div>
     </section>
   `,
