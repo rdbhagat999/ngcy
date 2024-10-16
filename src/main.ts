@@ -25,7 +25,7 @@ import { PostEffects } from "@app/state/post/post.effects";
 import { counterFeatureKey } from "@app/state/counter/counter.selectors";
 import { postFeatureKey } from "@app/state/post/post.state";
 import { productFeatureKey } from "@app/state/product/product.state";
-import { HashLocationStrategy, LocationStrategy } from "@angular/common";
+// import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 bootstrapApplication(AppComponent, {
   providers: [
