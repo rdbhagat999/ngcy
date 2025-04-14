@@ -14,48 +14,48 @@ export const serverRoutes: ServerRoute[] = [
     path: "about",
     renderMode: RenderMode.Prerender,
   },
-  {
-    path: "posts/:id",
-    renderMode: RenderMode.Prerender,
-    fallback: PrerenderFallback.Server,
-    async getPrerenderParams() {
-      const service = inject(PostService);
-      const postResp = lastValueFrom(service.getPosts());
-      const posts = (await postResp).posts.map((post) => ({
-        id: `${post.id}`,
-      }));
+  // {
+  //   path: "posts/:id",
+  //   renderMode: RenderMode.Prerender,
+  //   fallback: PrerenderFallback.Server,
+  //   async getPrerenderParams() {
+  //     const service = inject(PostService);
+  //     const postResp = lastValueFrom(service.getPosts());
+  //     const posts = (await postResp).posts.map((post) => ({
+  //       id: `${post.id}`,
+  //     }));
 
-      return posts ? posts : [];
-    },
-  },
-  {
-    path: "recipes/:id",
-    renderMode: RenderMode.Prerender,
-    fallback: PrerenderFallback.Server,
-    async getPrerenderParams() {
-      const service = inject(RecipeService);
-      const recipeResp = service.getRecipes();
-      const recipes = recipeResp()?.recipes.map((recipe) => {
-        return { id: `${recipe.id}` };
-      });
+  //     return posts ? posts : [];
+  //   },
+  // },
+  // {
+  //   path: "recipes/:id",
+  //   renderMode: RenderMode.Prerender,
+  //   fallback: PrerenderFallback.Server,
+  //   async getPrerenderParams() {
+  //     const service = inject(RecipeService);
+  //     const recipeResp = service.getRecipes();
+  //     const recipes = recipeResp()?.recipes.map((recipe) => {
+  //       return { id: `${recipe.id}` };
+  //     });
 
-      return recipes ? recipes : [];
-    },
-  },
-  {
-    path: "products/:id",
-    renderMode: RenderMode.Prerender,
-    fallback: PrerenderFallback.Server,
-    async getPrerenderParams() {
-      const service = inject(ProductService);
-      const recipeResp = lastValueFrom(service.getProducts());
-      const products = (await recipeResp).products.map((product) => ({
-        id: `${product.id}`,
-      }));
+  //     return recipes ? recipes : [];
+  //   },
+  // },
+  // {
+  //   path: "products/:id",
+  //   renderMode: RenderMode.Prerender,
+  //   fallback: PrerenderFallback.Server,
+  //   async getPrerenderParams() {
+  //     const service = inject(ProductService);
+  //     const recipeResp = lastValueFrom(service.getProducts());
+  //     const products = (await recipeResp).products.map((product) => ({
+  //       id: `${product.id}`,
+  //     }));
 
-      return products ? products : [];
-    },
-  },
+  //     return products ? products : [];
+  //   },
+  // },
   {
     path: "**",
     renderMode: RenderMode.Server,
