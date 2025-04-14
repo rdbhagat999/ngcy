@@ -15,7 +15,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
   {
-    path: "posts",
+    path: "posts/:id",
     renderMode: RenderMode.Prerender,
     fallback: PrerenderFallback.Server,
     async getPrerenderParams() {
@@ -29,7 +29,7 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
-    path: "recipes",
+    path: "recipes/:id",
     renderMode: RenderMode.Prerender,
     fallback: PrerenderFallback.Server,
     async getPrerenderParams() {
@@ -43,7 +43,7 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
-    path: "recipes",
+    path: "products/:id",
     renderMode: RenderMode.Prerender,
     fallback: PrerenderFallback.Server,
     async getPrerenderParams() {
