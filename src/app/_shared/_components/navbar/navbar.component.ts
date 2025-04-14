@@ -7,7 +7,7 @@ import {
   signal,
   Signal,
 } from "@angular/core";
-import { AsyncPipe, NgClass } from "@angular/common";
+import { AsyncPipe, NgClass, NgOptimizedImage } from "@angular/common";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, Observable, Subscription, takeUntil, tap } from "rxjs";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -37,6 +37,7 @@ To: "transform opacity-0 scale-95"
     DesktopNavbarComponent,
     ProfileDropdownComponent,
     ToggleDropdownComponent,
+    NgOptimizedImage,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [LifeCycleDirective],
@@ -54,16 +55,24 @@ To: "transform opacity-0 scale-95"
           <div
             class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
           >
-            <div class="flex flex-shrink-0 items-center">
+            <div class="relative flex flex-shrink-0 items-center">
               <img
                 class="block h-8 w-auto lg:hidden"
-                src="/assets/tailwind_logo.svg"
+                width="176"
+                height="150"
+                ngSrc="/assets/tailwind_logo.svg"
                 alt="Your Company"
+                priority
+                placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAW0lEQVRYR2PsWr8h1PVu2e9Vzw/13frrsXmmptun33mW3+x51rnwN7bcCpU+v4+W8oyjDhgNgdEQGA2B0RAYDYHREBgNgdEQGA2B0RAYDYHREBgNgdEQGOgQAABL4AjIMPTW8wAAAABJRU5ErkJggg=="
               />
               <img
                 class="hidden h-8 w-auto lg:block"
-                src="/assets/tailwind_logo.svg"
+                width="176"
+                height="150"
+                ngSrc="/assets/tailwind_logo.svg"
                 alt="Your Company"
+                priority
+                placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAW0lEQVRYR2PsWr8h1PVu2e9Vzw/13frrsXmmptun33mW3+x51rnwN7bcCpU+v4+W8oyjDhgNgdEQGA2B0RAYDYHREBgNgdEQGA2B0RAYDYHREBgNgdEQGOgQAABL4AjIMPTW8wAAAABJRU5ErkJggg=="
               />
             </div>
             <div class="hidden sm:ml-6 sm:block">

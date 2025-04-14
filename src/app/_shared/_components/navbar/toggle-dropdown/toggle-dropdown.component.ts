@@ -24,7 +24,7 @@ import { takeUntil, filter, tap } from "rxjs";
         data-cy="toggle-dropdown"
         (click)="handleToggleDropdown()"
         type="button"
-        class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+        class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
         id="user-menu-button"
         aria-expanded="false"
         aria-haspopup="true"
@@ -38,6 +38,7 @@ import { takeUntil, filter, tap } from "rxjs";
           height="32"
           alt="avatar"
           priority
+          placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAW0lEQVRYR2PsWr8h1PVu2e9Vzw/13frrsXmmptun33mW3+x51rnwN7bcCpU+v4+W8oyjDhgNgdEQGA2B0RAYDYHREBgNgdEQGA2B0RAYDYHREBgNgdEQGOgQAABL4AjIMPTW8wAAAABJRU5ErkJggg=="
         />
         }
       </button>
