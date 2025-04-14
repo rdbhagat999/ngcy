@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { PostService } from "@app/_services";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, switchMap } from "rxjs/operators";
@@ -13,7 +13,13 @@ import {
 
 @Injectable()
 export class PostEffects {
-  constructor(private actions$: Actions, private postService: PostService) {}
+  private actions$ = inject(Actions);
+  private postService = inject(PostService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(

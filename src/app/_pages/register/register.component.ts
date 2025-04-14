@@ -1,5 +1,5 @@
 import { afterNextRender, Component, inject, OnDestroy } from "@angular/core";
-import { NgClass, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import {
   FormBuilder,
   FormGroup,
@@ -18,7 +18,7 @@ import { WINDOW } from "@app/_shared/_models";
 
 @Component({
   selector: "app-register",
-  imports: [ReactiveFormsModule, NgClass, NgIf, InputFocusDirective],
+  imports: [ReactiveFormsModule, NgClass, InputFocusDirective],
   template: `
     <section class="register bg-gray-50 dark:bg-gray-900">
       <div
@@ -66,22 +66,20 @@ import { WINDOW } from "@app/_shared/_models";
                   placeholder="Enter username"
                   required
                 />
-                <div
-                  *ngIf="
-                    username?.invalid && (username?.dirty || username?.touched)
-                  "
-                >
+                @if ( username?.invalid && (username?.dirty ||
+                username?.touched) ) {
+                <div>
                   <p
                     class="mt-2 text-sm font-light text-red-500 dark:text-red-400"
                   >
-                    <span *ngIf="username?.errors?.['required']"
-                      >username is required</span
-                    >
-                    <span *ngIf="username?.errors?.['usernameExists']"
-                      >username already exists</span
-                    >
+                    @if (username?.errors?.['required']) {
+                    <span>username is required</span>
+                    } @if (username?.errors?.['usernameExists']) {
+                    <span>username already exists</span>
+                    }
                   </p>
                 </div>
+                }
               </div>
 
               <div>
@@ -104,19 +102,18 @@ import { WINDOW } from "@app/_shared/_models";
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
-                <div
-                  *ngIf="
-                    password?.invalid && (password?.dirty || password?.touched)
-                  "
-                >
+                @if ( password?.invalid && (password?.dirty ||
+                password?.touched) ) {
+                <div>
                   <p
                     class="mt-2 text-sm font-light text-red-500 dark:text-red-400"
                   >
-                    <span *ngIf="password?.errors?.['required']"
-                      >password is required</span
-                    >
+                    @if (password?.errors?.['required']) {
+                    <span>password is required</span>
+                    }
                   </p>
                 </div>
+                }
               </div>
 
               <div>
@@ -139,29 +136,27 @@ import { WINDOW } from "@app/_shared/_models";
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
-                <div
-                  *ngIf="
-                    confirmPassword?.invalid &&
-                    (confirmPassword?.dirty || confirmPassword?.touched)
-                  "
-                >
+                @if ( confirmPassword?.invalid && (confirmPassword?.dirty ||
+                confirmPassword?.touched) ) {
+                <div>
                   <p
                     class="mt-2 text-sm font-light text-red-500 dark:text-red-400"
                   >
-                    <span *ngIf="confirmPassword?.errors?.['required']"
-                      >password is required</span
-                    >
+                    @if (confirmPassword?.errors?.['required']) {
+                    <span>password is required</span>
+                    }
                   </p>
                 </div>
-                <div
-                  *ngIf="form?.errors?.['passwordMismatch'] && (form?.dirty || form?.touched)"
-                >
+                } @if (form.errors?.['passwordMismatch'] && (form.dirty ||
+                form.touched)) {
+                <div>
                   <p
                     class="mt-2 text-sm font-light text-red-500 dark:text-red-400"
                   >
                     <span>passwords don't match</span>
                   </p>
                 </div>
+                }
               </div>
 
               <button

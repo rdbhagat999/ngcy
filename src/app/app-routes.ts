@@ -1,12 +1,12 @@
 import { Route } from "@angular/router";
-import { HomeComponent } from "@app/_pages";
+
 import { AuthGuard, RegisterDeactivateGuard } from "./_shared/guards";
 
 export const APP_ROUTES: Route[] = [
   {
     path: "",
     pathMatch: "full",
-    component: HomeComponent,
+    loadComponent: () => import('@app/_pages').then(m => m.HomeComponent),
   },
   {
     path: "posts",

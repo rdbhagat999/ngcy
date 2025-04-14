@@ -1,13 +1,13 @@
 import {
   afterNextRender,
   Component,
-  EventEmitter,
   inject,
-  Input,
   OnInit,
-  Output,
+  input,
+  output,
+  model,
 } from "@angular/core";
-import { NgIf, NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { IDummyAuthUser } from "@app/_shared/_models";
 import { Router, NavigationEnd, RouterModule } from "@angular/router";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -15,10 +15,11 @@ import { takeUntil, filter, tap } from "rxjs";
 
 @Component({
   selector: "app-toggle-dropdown",
-  imports: [NgIf, RouterModule, NgOptimizedImage],
+  imports: [RouterModule, NgOptimizedImage],
   hostDirectives: [LifeCycleDirective],
   template: `
-    <div *ngIf="auth_user">
+    @if (auth_user()) {
+    <div>
       <button
         data-cy="toggle-dropdown"
         (click)="handleToggleDropdown()"
@@ -41,15 +42,16 @@ import { takeUntil, filter, tap } from "rxjs";
         }
       </button>
     </div>
+    }
   `,
   styles: [],
 })
 export class ToggleDropdownComponent implements OnInit {
   private router: Router = inject(Router);
   private lifeCycleDirective = inject(LifeCycleDirective);
-  @Input() isDropdownOpen = false;
-  @Input() auth_user!: IDummyAuthUser | null;
-  @Output() toggleDropdown = new EventEmitter<boolean>();
+  readonly isDropdownOpen = model(false);
+  readonly auth_user = input.required<IDummyAuthUser | null>();
+  readonly toggleDropdown = output<boolean>();
   avatarURL = "";
 
   constructor() {
@@ -65,13 +67,13 @@ export class ToggleDropdownComponent implements OnInit {
       .pipe(
         takeUntil(this.lifeCycleDirective.destroy$),
         filter((event) => event instanceof NavigationEnd),
-        tap(() => (this.isDropdownOpen = false))
+        tap(() => this.isDropdownOpen.set(false))
       )
       .subscribe();
   }
 
   handleToggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-    this.toggleDropdown.emit(this.isDropdownOpen);
+    this.isDropdownOpen.update((prev) => !prev);
+    this.toggleDropdown.emit(this.isDropdownOpen());
   }
 }

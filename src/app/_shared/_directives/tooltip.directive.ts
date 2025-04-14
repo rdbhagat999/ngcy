@@ -3,9 +3,9 @@ import {
   ElementRef,
   HostListener,
   inject,
-  Input,
   NgZone,
   Renderer2,
+  input
 } from "@angular/core";
 import { WINDOW } from "../_models";
 
@@ -18,7 +18,7 @@ export class TooltipDirective {
   private renderer = inject(Renderer2);
   private zone = inject(NgZone);
 
-  @Input() appTooltip!: string;
+  readonly appTooltip = input.required<string>();
   private delay = 100;
   private myPopup!: HTMLDivElement;
   private window = inject(WINDOW);
@@ -27,7 +27,7 @@ export class TooltipDirective {
   private createTooltipPopup(x: number, y: number) {
     let popup: HTMLDivElement = this.renderer.createElement("div");
     popup.setAttribute("class", "tooltip-container");
-    popup.innerHTML = this.appTooltip;
+    popup.innerHTML = this.appTooltip();
     popup.style.top = y.toString() + "px";
     popup.style.left = x.toString() + "px";
     popup.style.fontSize = "1rem";

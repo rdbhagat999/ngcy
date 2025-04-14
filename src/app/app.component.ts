@@ -18,9 +18,9 @@ import { AuthService } from "./_services";
   animations: [],
   template: `
     <!--The content below is only a placeholder and can be replaced.-->
-    <app-navbar></app-navbar>
-    <app-header></app-header>
-    <app-toastr></app-toastr>
+    <app-navbar />
+    <app-header />
+    <app-toastr />
 
     <main>
       <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">

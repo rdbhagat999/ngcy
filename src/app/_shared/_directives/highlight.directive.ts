@@ -4,8 +4,8 @@ import {
   HostBinding,
   HostListener,
   inject,
-  Input,
   Renderer2,
+  input
 } from "@angular/core";
 
 @Directive({
@@ -16,8 +16,8 @@ export class HighlightDirective {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
-  @Input() appHighlight = "";
-  @Input() defaultColor = "";
+  readonly appHighlight = input("");
+  readonly defaultColor = input("");
 
   ngOnInit(): void {}
 
@@ -28,7 +28,7 @@ export class HighlightDirective {
   // listen to events fired from host element
   @HostListener("mouseenter") onMouseEnter(): void {
     console.log("mouseenter");
-    this.highlight("black", this.appHighlight || this.defaultColor || "yellow");
+    this.highlight("black", this.appHighlight() || this.defaultColor() || "yellow");
     this.isMouseOver = true;
   }
 

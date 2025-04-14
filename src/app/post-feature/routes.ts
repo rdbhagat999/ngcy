@@ -1,7 +1,7 @@
 import { Route } from "@angular/router";
 import { PostService } from "@app/_services";
-import { PostDetailComponent } from "./_pages/post-detail/post-detail.component";
-import { PostListComponent } from "./_pages/post-list/post-list.component";
+
+
 
 export const POST_ROUTES: Route[] = [
   {
@@ -9,8 +9,8 @@ export const POST_ROUTES: Route[] = [
     pathMatch: "prefix",
     providers: [{ provide: PostService, useClass: PostService }],
     children: [
-      { path: "", component: PostListComponent },
-      { path: ":id", component: PostDetailComponent },
+      { path: "", loadComponent: () => import('./_pages/post-list/post-list.component').then(m => m.PostListComponent) },
+      { path: ":id", loadComponent: () => import('./_pages/post-detail/post-detail.component').then(m => m.PostDetailComponent) },
     ],
   },
 ];

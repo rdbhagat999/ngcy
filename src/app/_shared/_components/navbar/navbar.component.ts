@@ -4,9 +4,10 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  signal,
   Signal,
 } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass } from "@angular/common";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, Observable, Subscription, takeUntil, tap } from "rxjs";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -29,24 +30,25 @@ To: "transform opacity-0 scale-95"
 */
 
 @Component({
-    selector: "app-navbar",
-    imports: [
-        ToggleNavbarComponent,
-        MobileNavbarComponent,
-        DesktopNavbarComponent,
-        ProfileDropdownComponent,
-        ToggleDropdownComponent,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    hostDirectives: [LifeCycleDirective],
-    template: `
+  selector: "app-navbar",
+  imports: [
+    ToggleNavbarComponent,
+    MobileNavbarComponent,
+    DesktopNavbarComponent,
+    ProfileDropdownComponent,
+    ToggleDropdownComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [LifeCycleDirective],
+  template: `
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <app-toggle-navbar
+              [auth_user]="authUserSignal()"
               (isMobileMenuOpenEvent)="toggleMobileMenu($event)"
-              [isMobileMenuOpen]="isMobileMenuOpen"
+              [isMobileMenuOpen]="isMobileMenuOpen()"
             ></app-toggle-navbar>
           </div>
           <div
@@ -97,7 +99,7 @@ To: "transform opacity-0 scale-95"
               <div>
                 <app-toggle-dropdown
                   [auth_user]="authUserSignal()"
-                  [isDropdownOpen]="isDropdownOpen"
+                  [isDropdownOpen]="isDropdownOpen()"
                   (toggleDropdown)="toggleDropdown($event)"
                 ></app-toggle-dropdown>
               </div>
@@ -114,7 +116,7 @@ To: "transform opacity-0 scale-95"
         -->
               <app-profile-dropdown
                 (logoutEvent)="logoutEvent($event)"
-                [isDropdownOpen]="isDropdownOpen"
+                [isDropdownOpen]="isDropdownOpen()"
                 [auth_user]="authUserSignal()"
               ></app-profile-dropdown>
             </div>
@@ -123,20 +125,20 @@ To: "transform opacity-0 scale-95"
       </div>
 
       <app-mobile-navbar
-        [isMobileMenuOpen]="isMobileMenuOpen"
+        [isMobileMenuOpen]="isMobileMenuOpen()"
         [navLinks]="navLinks"
         [auth_user]="authUserSignal()"
       ></app-mobile-navbar>
     </nav>
   `,
-    styles: []
+  styles: [],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router: Router = inject(Router);
   private lifeCycleDirective = inject(LifeCycleDirective);
   private authService = inject(AuthService);
-  isMobileMenuOpen = false;
-  isDropdownOpen = false;
+  isMobileMenuOpen = signal(false);
+  isDropdownOpen = signal(false);
 
   navLinks: any = [
     { path: "/", label: "Home" },
@@ -162,8 +164,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
           takeUntil(this.lifeCycleDirective.destroy$),
           filter((event) => event instanceof NavigationEnd),
           tap(() => {
-            this.isMobileMenuOpen = false;
-            this.isDropdownOpen = false;
+            this.isMobileMenuOpen.set(false);
+            this.isDropdownOpen.set(false);
             return;
           })
         )
@@ -172,15 +174,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleMobileMenu(event: boolean) {
-    this.isMobileMenuOpen = event;
+    this.isMobileMenuOpen.set(event);
   }
 
   toggleDropdown(event: boolean) {
-    this.isDropdownOpen = event;
+    this.isDropdownOpen.set(event);
   }
 
-  logoutEvent(event: boolean) {
-    this.isDropdownOpen = event;
+  logoutEvent(event: boolean): void {
+    this.isDropdownOpen.set(event);
     this.authService.logoutFromDummyJson();
   }
 

@@ -2,9 +2,9 @@ import { NgClass } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  input,
+  model,
+  output,
 } from "@angular/core";
 import { IDummyAuthUser } from "@app/_shared/_models";
 
@@ -29,8 +29,8 @@ import { IDummyAuthUser } from "@app/_shared/_models";
         -->
       <svg
         [ngClass]="{
-          hidden: isMobileMenuOpen,
-          block: !isMobileMenuOpen
+          hidden: isMobileMenuOpen(),
+          block: !isMobileMenuOpen()
         }"
         class="h-6 w-6"
         fill="none"
@@ -52,8 +52,8 @@ import { IDummyAuthUser } from "@app/_shared/_models";
         -->
       <svg
         [ngClass]="{
-          block: isMobileMenuOpen,
-          hidden: !isMobileMenuOpen
+          block: isMobileMenuOpen(),
+          hidden: !isMobileMenuOpen()
         }"
         class="h-6 w-6"
         fill="none"
@@ -73,12 +73,12 @@ import { IDummyAuthUser } from "@app/_shared/_models";
   styles: [],
 })
 export class ToggleNavbarComponent {
-  @Input() isMobileMenuOpen = false;
-  @Input() auth_user!: IDummyAuthUser | null;
-  @Output() isMobileMenuOpenEvent = new EventEmitter<boolean>();
+  isMobileMenuOpen = model(false);
+  readonly auth_user = input.required<IDummyAuthUser | null>();
+  readonly isMobileMenuOpenEvent = output<boolean>();
 
   toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    this.isMobileMenuOpenEvent.emit(this.isMobileMenuOpen);
+    this.isMobileMenuOpen.update((prev) => !prev);
+    this.isMobileMenuOpenEvent.emit(this.isMobileMenuOpen());
   }
 }

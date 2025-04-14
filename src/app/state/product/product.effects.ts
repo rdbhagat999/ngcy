@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { ProductService } from "@app/_services/product.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, exhaustMap } from "rxjs/operators";
@@ -9,10 +9,13 @@ import {
 
 @Injectable()
 export class ProductEffects {
-  constructor(
-    private actions$: Actions,
-    private productService: ProductService
-  ) {}
+  private actions$ = inject(Actions);
+  private productService = inject(ProductService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   loadProduct$ = createEffect(() =>
     this.actions$.pipe(

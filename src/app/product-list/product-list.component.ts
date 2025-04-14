@@ -1,11 +1,11 @@
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   inject,
   OnInit,
-  ViewChild,
+  viewChild
 } from "@angular/core";
 import { loadProductsAction } from "@app/state/product/product.actions";
 import { selectProductsApiResponse } from "@app/state/product/product.selectors";
@@ -45,8 +45,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
       </button>
     </div>
 
-    <ag-grid-angular
-      style="width: 840px; height: 300px"
+    <ag-grid-angular style="width: 840px; height: 300px"
       class="ag-theme-alpine"
       [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef"
@@ -61,7 +60,7 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
       (gridReady)="onGridReady($event)"
       (cellClicked)="onCellClicked($event)"
       (paginationChanged)="onPaginationChanged($event)"
-    ></ag-grid-angular>
+     />
 
     <div class="flex justify-center items-center space-x-4">
       <button
@@ -134,7 +133,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     flex: 1,
   };
 
-  @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
+  readonly agGrid = viewChild.required(AgGridAngular);
 
   constructor() {
     this.store.dispatch(
@@ -156,7 +155,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   onGridReady(params: GridReadyEvent) {
-    this.agGrid.api!.setGridOption("loading", true);
+    this.agGrid().api!.setGridOption("loading", true);
     this.gridApi = params.api;
     this.currentPage = this.gridApi.paginationGetCurrentPage();
   }
@@ -216,15 +215,15 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   onBtShowLoading() {
-    this.agGrid.api!.setGridOption("loading", true);
+    this.agGrid().api!.setGridOption("loading", true);
   }
 
   onBtShowNoRows() {
-    this.agGrid.api!.setGridOption("loading", false);
+    this.agGrid().api!.setGridOption("loading", false);
   }
 
   onBtHide() {
-    this.agGrid.api!.setGridOption("loading", false);
+    this.agGrid().api!.setGridOption("loading", false);
   }
 
   fetchProducts() {
@@ -240,6 +239,6 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   // Example using Grid's API
   clearSelection(): void {
-    this.agGrid.api.deselectAll();
+    this.agGrid().api.deselectAll();
   }
 }

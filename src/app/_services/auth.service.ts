@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { Router } from "@angular/router";
 import { IDummyAuthUser, IDummyJsonUser } from "@app/_shared/_models";
 import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
@@ -11,6 +11,8 @@ import { isPlatformBrowser } from "@angular/common";
   providedIn: "root",
 })
 export class AuthService {
+  private platformId = inject<Object>(PLATFORM_ID);
+
   private http = inject(HttpClient);
   private router = inject(Router);
   private storageservice: StorageService = inject(StorageService);
@@ -19,7 +21,10 @@ export class AuthService {
 
   auth_user$ = this.auth_user.asObservable();
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   setAuthUser(user: any): void {
     if (isPlatformBrowser(this.platformId)) {
