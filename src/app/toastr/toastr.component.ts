@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass, NgForOf } from "@angular/common";
 import { Router, NavigationStart } from "@angular/router";
 import { Observable, of, Subscription, tap } from "rxjs";
 import { Toastr, ToastrType } from "./toastr";
@@ -23,8 +23,7 @@ const toastrTypeClass = {
 
 @Component({
   selector: "app-toastr",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [NgForOf, AsyncPipe, NgClass],
   animations: [
     trigger("showHideNotification", [
       state(

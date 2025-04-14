@@ -1,11 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import {
-  AsyncPipe,
-  NgClass,
-  NgForOf,
-  NgIf,
-  NgOptimizedImage,
-} from "@angular/common";
+import { AsyncPipe, NgIf, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { IDummyJsonUser } from "@app/_shared/_models";
@@ -13,8 +7,7 @@ import { Observable, switchMap } from "rxjs";
 
 @Component({
   selector: "app-user-profile",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule, NgOptimizedImage],
+  imports: [AsyncPipe, NgIf, RouterModule, NgOptimizedImage],
   template: `
     <section
       class="ease-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200"

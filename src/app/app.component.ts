@@ -13,7 +13,6 @@ import { AuthService } from "./_services";
 
 @Component({
   selector: "app-root",
-  standalone: true,
   imports: [RouterModule, NavbarComponent, HeaderComponent, ToastrComponent],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [],
@@ -40,7 +39,7 @@ import { AuthService } from "./_services";
 })
 export class AppComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
-  appVersion = VERSION.major + "." + VERSION.minor;
+  appVersion = VERSION.full;
 
   ngOnInit() {
     this.authService.setAuthUserFromStorage();

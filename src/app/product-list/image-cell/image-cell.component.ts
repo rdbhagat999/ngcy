@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { ICellRendererAngularComp } from "ag-grid-angular";
 import { ICellRendererParams } from "ag-grid-community";
 import { IProduct } from "@app/_shared/_models";
@@ -10,14 +10,16 @@ export type IMyCustomCellRendererParams = {
 
 @Component({
   selector: "app-image-cell",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [NgOptimizedImage],
   template: `
     <div class="realtive flex flex-col justify-start items-center">
       <img
         class="max-w-full object-contain"
-        [src]="product.thumbnail"
+        [ngSrc]="product.thumbnail"
         [attr.alt]="product.title"
+        width="32"
+        height="32"
+        priority
       />
     </div>
   `,

@@ -11,31 +11,24 @@ import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
 
 @Component({
-  selector: "app-mobile-navbar",
-  standalone: true,
-  imports: [NgClass, RouterModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger("openCloseMobileMenu", [
-      state(
-        "closed",
-        style({
-          opacity: 0,
-          transform: "scale(0.95, 0.95)",
-        })
-      ),
-      state(
-        "open",
-        style({
-          opacity: 1,
-          transform: "scale(1, 1)",
-        })
-      ),
-      transition("closed => open", [animate("100ms ease-out")]),
-      transition("open => closed", [animate("75ms ease-in")]),
-    ]),
-  ],
-  template: `
+    selector: "app-mobile-navbar",
+    imports: [NgClass, RouterModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger("openCloseMobileMenu", [
+            state("closed", style({
+                opacity: 0,
+                transform: "scale(0.95, 0.95)",
+            })),
+            state("open", style({
+                opacity: 1,
+                transform: "scale(1, 1)",
+            })),
+            transition("closed => open", [animate("100ms ease-out")]),
+            transition("open => closed", [animate("75ms ease-in")]),
+        ]),
+    ],
+    template: `
     <!-- Mobile menu, show/hide based on menu state. -->
     <div
       [@openCloseMobileMenu]="openCloseMobileMenuTrigger"
@@ -78,7 +71,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
       </div>
     </div>
   `,
-  styles: [],
+    styles: []
 })
 export class MobileNavbarComponent {
   navLinks = input.required<any[]>();

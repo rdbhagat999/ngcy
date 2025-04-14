@@ -10,13 +10,12 @@ import { RecipeService } from "@app/_services/recipe.service";
 import { IRecipeAPIResponse } from "@app/_shared/_models";
 
 @Component({
-  selector: "app-recipe-list",
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
-  hostDirectives: [],
-  providers: [],
-  template: `
+    selector: "app-recipe-list",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [],
+    hostDirectives: [],
+    providers: [],
+    template: `
     <section class="recipe-list grid grid-cols-1 gap-4">
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -60,7 +59,7 @@ import { IRecipeAPIResponse } from "@app/_shared/_models";
       </article>
     </section>
   `,
-  styles: [],
+    styles: []
 })
 export class RecipieListComponent implements OnInit {
   private recipeService = inject(RecipeService);

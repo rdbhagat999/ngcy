@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
-  selector: "app-header",
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: "app-header",
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
         <h1
@@ -17,7 +16,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
       </div>
     </header>
   `,
-  styles: [],
+    styles: []
 })
 export class HeaderComponent {
   title = "Cypress, NGRX & Angular Standalone Components";

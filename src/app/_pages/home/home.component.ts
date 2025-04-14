@@ -7,11 +7,10 @@ import {
 } from "@angular/core";
 
 @Component({
-  selector: "app-home",
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: "app-home",
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <section class="home grid grid-cols-1 gap-4">
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -53,7 +52,7 @@ import {
       </article>
     </section>
   `,
-  styles: [],
+    styles: []
 })
 export class HomeComponent {
   title = "hello";

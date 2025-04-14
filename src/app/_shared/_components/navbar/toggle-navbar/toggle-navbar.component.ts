@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,8 +10,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
 
 @Component({
   selector: "app-toggle-navbar",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Mobile menu button-->

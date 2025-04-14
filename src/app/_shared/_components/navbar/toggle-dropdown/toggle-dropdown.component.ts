@@ -6,13 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import {
-  AsyncPipe,
-  NgClass,
-  NgForOf,
-  NgIf,
-  NgOptimizedImage,
-} from "@angular/common";
+import { NgIf, NgOptimizedImage } from "@angular/common";
 import { IDummyAuthUser } from "@app/_shared/_models";
 import { Router, NavigationEnd, RouterModule } from "@angular/router";
 import { LifeCycleDirective } from "@app/_shared/_directives";
@@ -20,8 +14,7 @@ import { takeUntil, filter, tap } from "rxjs";
 
 @Component({
   selector: "app-toggle-dropdown",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule, NgOptimizedImage],
+  imports: [NgIf, RouterModule, NgOptimizedImage],
   hostDirectives: [LifeCycleDirective],
   template: `
     <div *ngIf="auth_user">

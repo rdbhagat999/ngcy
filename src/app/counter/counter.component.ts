@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import {
@@ -11,8 +11,7 @@ import { selectCounter } from "@app/state/counter/counter.selectors";
 
 @Component({
   selector: "app-counter",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf],
+  imports: [AsyncPipe],
   template: `
     <div class="flex flex-col justify-center items-center space-y-4">
       <button

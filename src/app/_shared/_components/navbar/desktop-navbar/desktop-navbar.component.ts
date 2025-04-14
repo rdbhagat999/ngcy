@@ -8,11 +8,10 @@ import { RouterModule } from "@angular/router";
 import { IDummyAuthUser } from "@app/_shared/_models";
 
 @Component({
-  selector: "app-desktop-navbar",
-  standalone: true,
-  imports: [RouterModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: "app-desktop-navbar",
+    imports: [RouterModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div class="flex space-x-4">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       @for (link of navLinks(); track link.label) {
@@ -49,7 +48,7 @@ import { IDummyAuthUser } from "@app/_shared/_models";
       }
     </div>
   `,
-  styles: [],
+    styles: []
 })
 export class DesktopNavbarComponent {
   navLinks = input.required<any[]>();

@@ -24,16 +24,8 @@ import { ImageCellComponent } from "./image-cell/image-cell.component";
 
 @Component({
   selector: "app-product-list",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    NgForOf,
-    AsyncPipe,
-    NgClass,
-    NgIf,
-    AgGridModule,
-    ImageCellComponent,
-  ],
+  imports: [AsyncPipe, AgGridModule],
   hostDirectives: [LifeCycleDirective],
   providers: [],
   template: `

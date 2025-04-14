@@ -2,11 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  inject,
   Input,
   Output,
 } from "@angular/core";
-import { AsyncPipe, NgClass, NgForOf, NgIf } from "@angular/common";
+import { NgIf } from "@angular/common";
 import {
   trigger,
   state,
@@ -20,8 +19,7 @@ import { LifeCycleDirective } from "@app/_shared/_directives";
 
 @Component({
   selector: "app-profile-dropdown",
-  standalone: true,
-  imports: [NgForOf, AsyncPipe, NgClass, NgIf, RouterModule],
+  imports: [NgIf, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [LifeCycleDirective],
   animations: [

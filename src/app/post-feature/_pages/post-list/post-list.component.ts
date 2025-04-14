@@ -20,11 +20,10 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
 import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: "app-post-list",
-  standalone: true,
-  imports: [RouterModule, PostCardComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: "app-post-list",
+    imports: [RouterModule, PostCardComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <section
       [class.md:grid-cols-2]="auth_user()?.role === authorRole"
       class="post-list grid grid-cols-1 gap-4"
@@ -102,7 +101,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
       }
     </section>
   `,
-  styles: [],
+    styles: []
 })
 export class PostListComponent implements OnInit {
   private authService: AuthService = inject(AuthService);

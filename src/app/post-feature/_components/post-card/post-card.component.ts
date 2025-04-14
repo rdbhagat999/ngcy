@@ -9,11 +9,10 @@ import { RouterModule } from "@angular/router";
 import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
 
 @Component({
-  selector: "app-post-card",
-  standalone: true,
-  imports: [RouterModule, HighlightDirective, TooltipDirective],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: "app-post-card",
+    imports: [RouterModule, HighlightDirective, TooltipDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
       <div class="flex w-0 flex-1 items-center">
         <svg
@@ -60,7 +59,7 @@ import { HighlightDirective, TooltipDirective } from "@app/_shared/_directives";
       </div>
     </li>
   `,
-  styles: [],
+    styles: []
 })
 export class PostCardComponent {
   adminRole: ROLE = ROLE.ADMIN;
