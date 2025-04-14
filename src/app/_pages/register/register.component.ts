@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from "@angular/core";
+import { afterNextRender, Component, inject, OnDestroy } from "@angular/core";
 import { NgClass, NgIf } from "@angular/common";
 import {
   FormBuilder,
@@ -17,9 +17,9 @@ import { InputFocusDirective } from "@app/_shared/_directives";
 import { WINDOW } from "@app/_shared/_models";
 
 @Component({
-    selector: "app-register",
-    imports: [ReactiveFormsModule, NgClass, NgIf, InputFocusDirective],
-    template: `
+  selector: "app-register",
+  imports: [ReactiveFormsModule, NgClass, NgIf, InputFocusDirective],
+  template: `
     <section class="register bg-gray-50 dark:bg-gray-900">
       <div
         class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
@@ -202,7 +202,7 @@ import { WINDOW } from "@app/_shared/_models";
       </div>
     </section>
   `,
-    styles: []
+  styles: [],
 })
 export class RegisterComponent implements OnDestroy {
   form!: FormGroup;
@@ -217,13 +217,16 @@ export class RegisterComponent implements OnDestroy {
   );
   private router: Router = inject(Router);
 
-  constructor() {}
+  constructor() {
+    afterNextRender(() => {
+      if (this.authService.getAuthUser()) {
+        this.router.navigate(["/"]);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.initForm();
-    if (this.authService.getAuthUser()) {
-      this.router.navigate(["/"]);
-    }
   }
 
   initForm() {

@@ -26,13 +26,16 @@ import { Observable, switchMap } from "rxjs";
                 <div
                   class="text-size-base ease-in-out h-32 w-32 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200"
                 >
+                  @if (profile?.image) {
                   <img
                     [ngSrc]="profile?.image || '/assets/profile_user.jpg'"
                     alt="profile_image"
                     width="128"
                     height="128"
                     class="w-full shadow-sm rounded-xl"
+                    priority
                   />
+                  }
                 </div>
               </div>
               <div class="flex-none w-auto max-w-full px-3 my-auto">

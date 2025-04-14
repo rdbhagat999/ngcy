@@ -27,7 +27,7 @@ import { AuthService } from "./_services";
         <!-- Replace with your content -->
         <div class="px-4 sm:px-0">
           <div class="rounded-lg border-4 border-dashed border-gray-200">
-            <p class="p-1 text-lg">Angular version: {{ appVersion }}</p>
+            <p class="p-1 text-lg">Angular SSR: {{ appVersion }}</p>
             <router-outlet></router-outlet>
           </div>
         </div>

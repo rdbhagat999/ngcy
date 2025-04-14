@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { Inject, inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { Router } from "@angular/router";
 import { IDummyAuthUser, IDummyJsonUser } from "@app/_shared/_models";
 import { BACKEND_API } from "@app/_shared/_models/BackendUrl";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { StorageService } from "./storage.service";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
   providedIn: "root",
@@ -18,18 +19,27 @@ export class AuthService {
 
   auth_user$ = this.auth_user.asObservable();
 
-  setAuthUser(user: any): void {
-    this.storageservice.saveUserToStorage(user);
-    this.auth_user.next(user);
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  setAuthUserFromStorage(): void {
-    this.auth_user.next(this.getAuthUser());
+  setAuthUser(user: any): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.storageservice.saveUserToStorage(user);
+      this.auth_user.next(user);
+    }
   }
 
   getAuthUser(): IDummyAuthUser | null {
-    const user = this.storageservice.getUserFromStorage();
-    return user;
+    if (isPlatformBrowser(this.platformId)) {
+      const user = this.storageservice.getUserFromStorage();
+      return user;
+    }
+    return null;
+  }
+
+  setAuthUserFromStorage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.auth_user.next(this.getAuthUser());
+    }
   }
 
   loginToDummyJson(username: string, password: string) {
@@ -63,7 +73,9 @@ export class AuthService {
 
   logoutFromDummyJson() {
     this.setAuthUser(null);
-    this.storageservice.clean();
+    if (isPlatformBrowser(this.platformId)) {
+      this.storageservice.clean();
+    }
     this.router.navigateByUrl("/login");
   }
 }

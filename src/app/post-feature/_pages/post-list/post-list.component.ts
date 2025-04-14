@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   inject,
@@ -20,10 +21,10 @@ import { selectPosts, selectYourPosts } from "@app/state/post/post.selectors";
 import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
-    selector: "app-post-list",
-    imports: [RouterModule, PostCardComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: "app-post-list",
+  imports: [RouterModule, PostCardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <section
       [class.md:grid-cols-2]="auth_user()?.role === authorRole"
       class="post-list grid grid-cols-1 gap-4"
@@ -101,7 +102,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
       }
     </section>
   `,
-    styles: []
+  styles: [],
 })
 export class PostListComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
@@ -121,11 +122,13 @@ export class PostListComponent implements OnInit {
   };
 
   constructor() {
-    this.auth_user.set(this.authService.getAuthUser());
-    this.store.dispatch(loadPostsAction({ page: 0, limit: 10 }));
-    this.store.dispatch(
-      loadPostsByUserIdAction({ userId: this.auth_user()?.id || 0 })
-    );
+    afterNextRender(() => {
+      this.auth_user.set(this.authService.getAuthUser());
+      this.store.dispatch(loadPostsAction({ page: 0, limit: 10 }));
+      this.store.dispatch(
+        loadPostsByUserIdAction({ userId: this.auth_user()?.id || 0 })
+      );
+    });
 
     const posts$ = this.store.select(selectPosts);
     const yourPosts$ = this.store.select(selectYourPosts);

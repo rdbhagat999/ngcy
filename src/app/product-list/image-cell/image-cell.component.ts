@@ -13,6 +13,7 @@ export type IMyCustomCellRendererParams = {
   imports: [NgOptimizedImage],
   template: `
     <div class="realtive flex flex-col justify-start items-center">
+      @if (product.thumbnail) {
       <img
         class="max-w-full object-contain"
         [ngSrc]="product.thumbnail"
@@ -21,6 +22,7 @@ export type IMyCustomCellRendererParams = {
         height="32"
         priority
       />
+      }
     </div>
   `,
   styles: [],

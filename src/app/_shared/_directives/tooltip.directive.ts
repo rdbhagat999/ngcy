@@ -22,7 +22,7 @@ export class TooltipDirective {
   private delay = 100;
   private myPopup!: HTMLDivElement;
   private window = inject(WINDOW);
-  private timer!: ReturnType<typeof setTimeout>;
+  private timer!: any;
 
   private createTooltipPopup(x: number, y: number) {
     let popup: HTMLDivElement = this.renderer.createElement("div");

@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { ErrorHandler, importProvidersFrom } from "@angular/core";
-import { bootstrapApplication } from "@angular/platform-browser";
+import { bootstrapApplication, provideClientHydration, withEventReplay } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { provideRouter } from "@angular/router";
 import { provideState, provideStore } from "@ngrx/store";
@@ -44,6 +44,6 @@ bootstrapApplication(AppComponent, {
       withInterceptors([errorInterceptor, authInterceptor, cacheInterceptor])
     ),
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
-    provideRouter([...APP_ROUTES]),
+    provideRouter([...APP_ROUTES]), provideClientHydration(withEventReplay()),
   ],
 });

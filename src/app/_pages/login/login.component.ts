@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { afterNextRender, Component, inject } from "@angular/core";
 import { NgClass, NgIf } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
 import {
@@ -200,6 +200,14 @@ export class LoginComponent {
   sub2$!: Subscription;
   sub3$!: Subscription;
 
+  constructor() {
+    afterNextRender(() => {
+      if (this.authService.getAuthUser()) {
+        this.router.navigate(["/"]);
+      }
+    });
+  }
+
   initLoginRoleForm() {
     this.loginRoleForm = this.fb.group({
       loginRole: new FormControl("USER"),
@@ -231,10 +239,6 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.initForm();
-
-    if (this.authService.getAuthUser()) {
-      this.router.navigate(["/"]);
-    }
   }
 
   initForm() {

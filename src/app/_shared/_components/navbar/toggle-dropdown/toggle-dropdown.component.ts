@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   Component,
   EventEmitter,
   inject,
@@ -28,13 +29,16 @@ import { takeUntil, filter, tap } from "rxjs";
         aria-haspopup="true"
       >
         <span class="sr-only">Open user menu</span>
+        @if (avatarURL) {
         <img
           class="h-8 w-8 rounded-full"
           [ngSrc]="avatarURL"
           width="32"
           height="32"
           alt="avatar"
+          priority
         />
+        }
       </button>
     </div>
   `,
@@ -49,9 +53,11 @@ export class ToggleDropdownComponent implements OnInit {
   avatarURL = "";
 
   constructor() {
-    this.avatarURL = window.location.href.includes("localhost")
-      ? "assets/navbar_avatar.avif"
-      : "/assets/navbar_avatar.avif";
+    afterNextRender(() => {
+      this.avatarURL = window.location.href.includes("localhost")
+        ? "assets/navbar_avatar.avif"
+        : "/assets/navbar_avatar.avif";
+    });
   }
 
   ngOnInit() {
