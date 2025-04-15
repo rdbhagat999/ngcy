@@ -32,12 +32,12 @@ import { toSignal } from "@angular/core/rxjs-interop";
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
-            <h3
+            <h1
               data-cy="post-list"
               class="text-lg font-medium leading-6 text-gray-900"
             >
               Post list
-            </h3>
+            </h1>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
               Displays a list of posts from all authors.
             </p>
@@ -68,12 +68,12 @@ import { toSignal } from "@angular/core/rxjs-interop";
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
-            <h3
+            <h1
               data-cy="your-post-list"
               class="text-lg font-medium leading-6 text-gray-900"
             >
               Your post list
-            </h3>
+            </h1>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
               Displays a list of posts from you.
             </p>

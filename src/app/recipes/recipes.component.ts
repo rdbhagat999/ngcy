@@ -10,22 +10,22 @@ import { RecipeService } from "@app/_services/recipe.service";
 import { IRecipeAPIResponse } from "@app/_shared/_models";
 
 @Component({
-    selector: "app-recipe-list",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
-    hostDirectives: [],
-    providers: [],
-    template: `
+  selector: "app-recipe-list",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
+  hostDirectives: [],
+  providers: [],
+  template: `
     <section class="recipe-list grid grid-cols-1 gap-4">
       <article>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
           <div class="px-4 py-5 sm:px-6">
-            <h3
+            <h1
               data-cy="recipe-list"
               class="text-lg font-medium leading-6 text-gray-900"
             >
               Recipe list
-            </h3>
+            </h1>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
               Displays a list of recipes.
             </p>
@@ -59,7 +59,7 @@ import { IRecipeAPIResponse } from "@app/_shared/_models";
       </article>
     </section>
   `,
-    styles: []
+  styles: [],
 })
 export class RecipieListComponent implements OnInit {
   private recipeService = inject(RecipeService);
