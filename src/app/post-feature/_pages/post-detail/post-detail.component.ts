@@ -23,21 +23,21 @@ import { toSignal } from "@angular/core/rxjs-interop";
     <section class="post-list">
       <div class="overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="px-4 pt-5 sm:px-6">
-          <h3
+          <h1
             data-cy="post-title"
             class="text-lg font-medium leading-6 text-gray-900"
           >
             {{ postSignal()?.title || "Loading" }}
-          </h3>
+          </h1>
           <p data-cy="post-body" class="mt-1 max-w-2xl text-sm text-gray-500">
             {{ postSignal()?.body || "Loading" }}
           </p>
         </div>
 
         <div class="bg-white px-4 py-5 sm:grid sm:px-6">
-          <h3 class="text-base mb-2 font-medium leading-6 text-gray-900">
+          <h2 class="text-base mb-2 font-medium leading-6 text-gray-900">
             Tags
-          </h3>
+          </h2>
           <ul
             role="list"
             class="divide-y divide-gray-200 rounded-md border border-gray-200"
