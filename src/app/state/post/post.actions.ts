@@ -28,6 +28,11 @@ export const loadPostsSuccessAction = createAction(
   props<{ postApiResponse: IPostAPIResponse }>()
 );
 
+export const loadPostsFailureAction = createAction(
+  LoadPostsFailureActionType,
+  props<{ error: string; statusCode?: number }>()
+);
+
 export const loadPostByIdAction = createAction(
   LoadPostByIdActionType,
   props<{ id: number }>()

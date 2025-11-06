@@ -7,7 +7,7 @@ import {
   Signal,
 } from "@angular/core";
 import { IPost } from "@app/_shared/_models";
-import { ActivatedRoute, RouterModule } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { switchMap } from "rxjs";
 
 import { Store } from "@ngrx/store";
@@ -17,7 +17,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-post-detail",
-  imports: [RouterModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="post-list">

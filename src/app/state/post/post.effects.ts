@@ -1,15 +1,18 @@
 import { Injectable, inject } from "@angular/core";
 import { PostService } from "@app/_services";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap } from "rxjs/operators";
 import {
   loadPostByIdAction,
   loadPostByIdSuccessAction,
   loadPostsAction,
   loadPostsByUserIdAction,
   loadPostsByUserIdSuccessAction,
+  loadPostsFailureAction,
+  LoadPostsFailureActionType,
   loadPostsSuccessAction,
 } from "./post.actions";
+import { of } from "rxjs";
 
 @Injectable()
 export class PostEffects {
@@ -29,8 +32,28 @@ export class PostEffects {
         return this.postService.getPosts(action.page, action.limit).pipe(
           map((postApiResponse) => {
             return loadPostsSuccessAction({ postApiResponse });
+          }),
+          catchError((error) => {
+            console.error("Error loading posts:", error);
+
+            // Handle different types of errors
+            let errorMessage = "An unexpected error occurred";
+
+            if (error.status === 404) {
+              errorMessage = "Posts not found";
+            } else if (error.status === 500) {
+              errorMessage = "Server error, please try again later";
+            } else if (error.message) {
+              errorMessage = error.message;
+            }
+
+            return of(
+              loadPostsFailureAction({
+                error: errorMessage,
+                statusCode: error.status,
+              })
+            );
           })
-          // catchError(() => of({ type: LoadPostsFailureActionType }))
         );
       })
     )

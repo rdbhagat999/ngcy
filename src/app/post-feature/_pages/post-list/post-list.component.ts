@@ -7,7 +7,6 @@ import {
   signal,
   Signal,
 } from "@angular/core";
-import { RouterModule } from "@angular/router";
 import { AuthService } from "@app/_services";
 import { PostCardComponent } from "@app/post-feature/_components/post-card/post-card.component";
 import { IDummyAuthUser, IPost, ROLE } from "@app/_shared/_models";
@@ -22,7 +21,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-post-list",
-  imports: [RouterModule, PostCardComponent],
+  imports: [PostCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
